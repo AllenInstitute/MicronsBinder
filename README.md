@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AllenInstitute/MicronsBinder/master?filepath=notebooks%2FMostSynapsesInAndOut)
+
 # MicronsBinder
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
 
@@ -30,3 +32,4 @@ performing analysis (with tools like trimesh, and scipy) and visualization (via 
 # Level of Support
 We are releasing this repository as is, and plan on update it without a fixed schedule.
 It is intended to be a teaching tool to start interacting with the data. Community involvement is encouraged through both issues and pull requests.
+
