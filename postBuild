@@ -1,0 +1,2 @@
+wget -q -O pni_synapses_v185.csv "https://zenodo.org/record/3710459/files/pni_synapses_v185.csv?download=1"
+wget -q -O soma_valence_v185.csv "https://zenodo.org/record/3710459/files/soma_valence_v185.csv?download=1"
