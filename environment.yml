@@ -12,5 +12,6 @@ dependencies:
     - nglui==2.0.0
     - scipy
     - seaborn
+    - cloud-volume
 prefix: /opt/anaconda3/envs/micronsbinder
 
