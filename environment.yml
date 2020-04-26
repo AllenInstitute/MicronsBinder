@@ -14,5 +14,6 @@ dependencies:
     - seaborn
     - cloud-volume
     - annotationframeworkclient
+    - imageio
 prefix: /opt/anaconda3/envs/micronsbinder
 
