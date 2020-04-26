@@ -13,5 +13,6 @@ dependencies:
     - scipy
     - seaborn
     - cloud-volume
+    - annotationframeworkclient
 prefix: /opt/anaconda3/envs/micronsbinder
 
