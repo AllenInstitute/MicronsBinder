@@ -8,6 +8,8 @@ dependencies:
   - pandas
   - python=3.7.0
   - pip
+  - pykdtree
+  - itkwidgets
   - pip:
     - nglui==2.0.0
     - scipy
@@ -15,5 +17,6 @@ dependencies:
     - cloud-volume
     - annotationframeworkclient
     - imageio
+    - meshparty
 prefix: /opt/anaconda3/envs/micronsbinder
 
