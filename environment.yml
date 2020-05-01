@@ -2,6 +2,7 @@ name: micronsbinder
 channels:
   - defaults
   - conda-forge
+  - plotly
 dependencies:
   - matplotlib
   - numpy
@@ -10,13 +11,18 @@ dependencies:
   - pip
   - pykdtree
   - itkwidgets
+  - jupyterlab>=1.0
+  - jupyterlab-dash=0.1.0a3
+  - dash
+  - scipy
+  - seaborn
+  - imageio
+  - nodejs
   - pip:
-    - nglui==2.0.0
-    - scipy
-    - seaborn
+    - nglui
     - cloud-volume
     - annotationframeworkclient
-    - imageio
     - meshparty
-prefix: /opt/anaconda3/envs/micronsbinder
+    - dashdataframe
+
 
