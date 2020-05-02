@@ -30,7 +30,7 @@ and Casey Schneider-Mizell (Allen) to make downloading meshes (via cloud-volume)
 performing analysis (with tools like trimesh, and scipy) and visualization (via vtk) of neuronal meshes easier.  
 
 ## [DashDataFrame](https://www.github.com/AllenInstitute/DashDataFrame)
-This is a package developed by Leila Elabaddy, Melissa Hendershott, and Forrest Collman at the Allen Institute.  It makes constructing dynamic visualization from pandas dataframes using [Dash](https://www.github.com/plotly/dash), including making dynamic links out to external services.  In this case, we use this to make dynamic scatterplots that allow you to select variables to plot, select and filter data points, and construct neuroglancer links to link those data points to specific locations in the dataset.
+This is a package developed by Leila Elabaddy, Melissa Hendershott, and Forrest Collman at the Allen Institute.  It simplifies constructing dynamic visualization from pandas dataframes using [Dash](https://www.github.com/plotly/dash), including making dynamic links out to external services.  In this case, we use this to make dynamic scatterplots that allow you to select variables to plot, select and filter data points, and construct neuroglancer views of the specific locations in the dataset of those data points.
 
 # Level of Support
 We are releasing this repository as is, and plan on update it without a fixed schedule.
