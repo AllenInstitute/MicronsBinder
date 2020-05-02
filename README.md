@@ -4,8 +4,7 @@
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
 
 # Related projects
-The notebooks contained here make heavy use of standard python tools, but also tools built
-as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer whose development
+The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer whose development
 by Jeremy Maiten-Shepard from the Connectomics group at Google.
 
 Here is a list of some of the relevant repositories to know about
