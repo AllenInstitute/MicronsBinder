@@ -3,7 +3,7 @@
 # MicronsBinder
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
 
-# Reccomended Notebook Order
+# Recommended Notebook Order
 
 ### [MostSynapsesInAndOut](notebooks/MostSynapsesInAndOut,ipynb)
 This notebook introduces you to reading synapses and the soma valence table.  It creates neuroglancer links that let you explore the inputs and outputs of individual neurons.
