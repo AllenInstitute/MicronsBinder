@@ -3,6 +3,26 @@
 # MicronsBinder
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
 
+# Reccomended Notebook Order
+
+### [MostSynapsesInAndOut](notebooks/MostSynapsesInAndOut,ipynb)
+This notebook introduces you to reading synapses and the soma valence table.  It creates neuroglancer links that let you explore the inputs and outputs of individual neurons.
+
+###  [DashSynapseExplorer](notebooks/DashSynapseExplorer.ipynb)
+This notebook shows you how to create dynamic scatterplots that recreate some of the results about layer 2/3 to layer 2/3 connections that were reported in Dorkenwald et al. 2019.
+
+### [ImageAndSegmentationDownload](notebooks/ImageAndSegmentationDownload.ipynb)
+This notebook shows you how to create figures with overlaid EM and segmentation figures.
+
+## Local Notebooks
+These notebooks are not intended to be run on mybinder, because they require use of VTK, which interfaces with your graphics card to make 3d graphics.  To run them you should setup a local python environment with the requirements outlined in [environment.yml](environment.yml)
+
+### [MeshExample](notebooks/MeshExample.ipynb)
+This demonstrates some basic 3d visualization of a meshes and skeletons using vtk, as well as calculating shortest paths along a mesh.
+
+### [Render3dScaleBar](notebooks/Render3dScaleBar.ipynb)
+This demonstrates two techinques to create 3d scale bars on 3d visualization plots.
+
 # Related projects
 The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer whose development
 by Jeremy Maiten-Shepard from the Connectomics group at Google.
