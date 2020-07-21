@@ -14,6 +14,7 @@ dependencies:
   - jupyterlab>=1.0
   - jupyter-dash
   - notebook==6.0.3
+  - jupyter-server-proxy
   - dash
   - scipy
   - seaborn
@@ -25,6 +26,5 @@ dependencies:
     - annotationframeworkclient
     - meshparty
     - dashdataframe
-    - jupyter_server_proxy
 
 
