@@ -12,7 +12,9 @@ dependencies:
   - pykdtree
   - itkwidgets
   - jupyterlab>=1.0
-  - jupyterlab-dash=0.1.0a3
+  - jupyter-dash
+  - notebook==6.0.3
+  - jupyter_server_proxy
   - dash
   - scipy
   - seaborn
