@@ -21,7 +21,6 @@ dependencies:
   - imageio
   - nodejs
   - statsmodels
-  - neuroglancer
   - pip:
     - nglui
     - cloud-volume
@@ -29,3 +28,4 @@ dependencies:
     - meshparty
     - dashdataframe==0.4.1
     - gdown
+    - neuroglancer
