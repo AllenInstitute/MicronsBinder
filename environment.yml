@@ -21,6 +21,7 @@ dependencies:
   - imageio
   - nodejs
   - statsmodels
+  - neuroglancer
   - pip:
     - nglui
     - cloud-volume
