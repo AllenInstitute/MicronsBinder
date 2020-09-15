@@ -9,7 +9,7 @@ ngl.set_static_content_source(url="https://cjauthupdate2-dot-neuromancer-seung-i
 IMG_CVPATH = "gs://microns_public_datasets/pinky100_v0/son_of_alignment_v15_rechunked"
 SEG_GS_CVPATH = "gs://microns_public_datasets/pinky100_v185/seg"
 CLF_CVPATH = "gs://neuroglancer/pinky100_v0/clefts/mip1_d2_1175k"
-SEG_CVPATH = SEG_CL_CVPATH
+SEG_CVPATH = SEG_GS_CVPATH
 MITO_CVPATH = "gs://neuroglancer/pinky100_v0/mito_seg_191220"
 NUC_CVPATH = "gs://neuroglancer/pinky100_v0/nucleus/seg"
 
