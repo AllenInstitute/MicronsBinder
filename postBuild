@@ -1,7 +1,7 @@
 mkdir $HOME/.jupyter
 echo "c.NotebookApp.iopub_data_rate_limit=1e22" >> $HOME/.jupyter/jupyter_notebook_config.py
-jupyter nbextension install --py --sys-prefix itkwidgets --debug
-jupyter nbextension enable --py --sys-prefix itkwidgets --debug
+jupyter nbextension install --py --sys-prefix itkwidgets
+jupyter nbextension enable --py --sys-prefix itkwidgets
 cd /tmp/
 jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build
 jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets jupyter-webrtc itkwidgets --no-build
