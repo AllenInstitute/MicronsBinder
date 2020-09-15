@@ -1,10 +1,5 @@
 mkdir $HOME/.jupyter
 echo "c.NotebookApp.iopub_data_rate_limit=1e22" >> $HOME/.jupyter/jupyter_notebook_config.py
-wget -q -O pni_synapses_v185.csv "https://zenodo.org/record/3710459/files/pni_synapses_v185.csv?download=1"
-wget -q -O soma_valence_v185.csv "https://zenodo.org/record/3710459/files/soma_valence_v185.csv?download=1"
-wget -q -O soma_subgraph_synapses_spines_v185.csv "https://zenodo.org/record/3710459/files/soma_subgraph_synapses_spines_v185.csv?download=1"
-jupyter nbextension install --py --sys-prefix itkwidgets
-jupyter nbextension enable --py --sys-prefix itkwidgets
 cd /tmp/
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets jupyter-webrtc itkwidgets
