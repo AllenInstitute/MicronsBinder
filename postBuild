@@ -1,6 +1,7 @@
 mkdir $HOME/.jupyter
 echo "c.NotebookApp.iopub_data_rate_limit=1e22" >> $HOME/.jupyter/jupyter_notebook_config.py
 cd /tmp/
-jupyter labextension install @jupyter-widgets/jupyterlab-manager
-jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets jupyter-webrtc itkwidgets
-jupyter labextension install jupyterlab-dash
+#jupyter labextension install @jupyter-widgets/jupyterlab-manager
+#jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets jupyter-webrtc
+jupyter labextension install jupyter-matplotlib
+#jupyter labextension install jupyterlab-dash
