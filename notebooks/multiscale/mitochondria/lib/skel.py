@@ -23,7 +23,7 @@ from . import ngl
 
 
 CVOL = cv.CloudVolume(ngl.MITO_CVPATH, parallel=8, progress=False)
-SKELDIR = ""
+SKELDIR = "data/smoothed_skeletons_v185"
 SKEL_ASSOC_DIR = "../../mito-analysis/intermeds/mito_to_skel"
 
 
@@ -48,7 +48,7 @@ def read_smoothed_skel(segid):
 
 
 def read_neuron_complbls(segid):
-    smoothed_filename = f"{SMOOTHED_SKELDIR}/{segid}_skeleton_label.npy"
+    smoothed_filename = f"{SKELDIR}/{segid}_skeleton_label.npy"
 
     if os.path.exists(smoothed_filename):
         return np.load(smoothed_filename)
@@ -57,7 +57,7 @@ def read_neuron_complbls(segid):
 
 
 def read_smoothed_complbls(segid):
-    filename = f"{SMOOTHED_SKELDIR}/{segid}_skeleton_label.npy"
+    filename = f"{SKELDIR}/{segid}_skeleton_label.npy"
 
     return np.load(filename)
 

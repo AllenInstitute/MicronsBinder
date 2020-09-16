@@ -14,7 +14,7 @@ from . import ngl
 
 MESHMETA = trimesh_io.MeshMeta()
 MITOMESHDIR = ""
-CELLMESHDIR = ""
+CELLMESHDIR = "data/neuronmeshes"
 
 
 def download_meshes(segids, overwrite=False, parallel=1,
@@ -29,10 +29,7 @@ def read_mito_mesh(segid):
 
 
 def read_cell_mesh(segid):
-    filename = f"{CELLMESHDIR}/{segid}.h5"
-    inter_filename = f"{INTERNEURONMESHDIR}/{segid}_mesh.h5"
-
-    filename = inter_filename if os.path.exists(inter_filename) else filename
+    filename = f"{CELLMESHDIR}/{segid}_mesh.h5"
 
     return read_mesh(filename)
 
