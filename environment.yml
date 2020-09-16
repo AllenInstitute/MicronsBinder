@@ -28,4 +28,8 @@ dependencies:
     - meshparty
     - dashdataframe==0.4.1
     - gdown
+    - networkx
+    - time
+    - tqdm
     - neuroglancer
+    
