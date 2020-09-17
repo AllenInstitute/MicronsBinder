@@ -22,7 +22,7 @@ from scipy.sparse import csgraph
 from . import ngl
 
 
-CVOL = cv.CloudVolume(ngl.MITO_CVPATH, parallel=8, progress=False)
+#CVOL = cv.CloudVolume(ngl.MITO_CVPATH, parallel=8, progress=False)
 SKELDIR = "data/smoothed_skeletons_v185"
 SKEL_ASSOC_DIR = "../../mito-analysis/intermeds/mito_to_skel"
 
