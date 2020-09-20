@@ -226,7 +226,7 @@ def plot_linear_fit(X, y, lw=3, color=COLORS[3]):
 
     plt.plot(x, fit.fittedvalues, color='r')
     plt.fill_between(
-        x, confint["mean_ci_lower"], confint["mean_ci_upper"],
+        x, confint["obs_ci_lower"], confint["obs_ci_upper"],
         alpha=0.2, color="gray")
 
     return fit
@@ -434,6 +434,8 @@ def extPanel4C(distdf):
     plt.xlabel("Distance from soma node ($\mathrm{\mu}$m)", fontsize=AXIS_FONTSIZE)
 
 
+# copied from StackOverflow
+# https://stackoverflow.com/questions/11517986/indicating-the-statistically-significant-difference-in-bar-graph  # noqa
 def barplot_annotate_brackets(
     num1, num2, data, center, height, yerr=None,
     dh=.05, barh=.05, fs=None, maxasterix=None):
@@ -451,8 +453,6 @@ def barplot_annotate_brackets(
     :param fs: font size
     :param maxasterix: maximum number of asterixes to write (for very small p-values)
     """
-    # copied from StackOverflow
-    # https://stackoverflow.com/questions/11517986/indicating-the-statistically-significant-difference-in-bar-graph  # noqa
 
     if type(data) is str:
         text = data
