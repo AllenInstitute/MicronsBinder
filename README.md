@@ -33,17 +33,13 @@ by Jeremy Maitin-Shepard from the Connectomics group at Google).
 * [neuroglancer](https://www.github.com/google/neuroglancer)  
 This is the main neuroglancer repository developed by Jeremy Maitin-Shepard. 
 * [neuroglancer Seung-lab](https://www.github.com/seung-lab/neuroglancer)  
-This is the Seung lab's fork of neuroglancer that has some alternative features
-added by many different Seung lab members. 
+This is the Seung lab's fork of neuroglancer that has some alternative features added by many different Seung lab members. 
 * [NeuroglancerAnnotationUI (nglui)](https://www.github.com/seung-lab/NeuroglancerAnnotationUI)  
-This is a package principled developed by Casey Schneider-Mizell from the Allen Institute,
-which helps you create a pipeline of pandas dataframes to neuroglancer links.
+This is a package principally developed by Casey Schneider-Mizell from the Allen Institute.  The package helps to create a pipeline that connects [pandas](https://pandas.pydata.org/) dataframes to neuroglancer links that visualize the contained data.
 * [CloudVolume](https://www.github.com/seung-lab/cloud-volume)  
-This is a python library developed principly by Will Silversmith from the Seung Lab for reading and writing image data, segmentation data, meshes and skeletons to a variety of storage locations (cloud buckets, files, etc).
+This is a python library developed principally by Will Silversmith from the Seung Lab for reading and writing volumetric data (e.g. EM images, segmentation), meshes, and skeletons to a variety of storage locations (e.g. cloud buckets, chunked files).
 * [MeshParty](https://www.github.com/sdorkenw/MeshParty)  
-This is a package developed by Sven Dorkenwald (Princeton), Forrest Collman (Allen),
-and Casey Schneider-Mizell (Allen) to make downloading meshes (via cloud-volume),
-performing analysis (with tools like trimesh, and scipy) and visualization (via vtk) of neuronal meshes easier.  There are also some tools for helping make dynamic movies of these data.
+This is a package developed by Sven Dorkenwald (Princeton), Forrest Collman (Allen), and Casey Schneider-Mizell (Allen) to make downloading meshes (via [CloudVolume](https://www.github.com/seung-lab/cloud-volume)), performing analysis (with tools like [trimesh](https://github.com/mikedh/trimesh), and [scipy](https://www.scipy.org/)) and visualization (via [vtk](https://pypi.org/project/vtk/)) of neuronal meshes easier.  There are also some tools for helping make dynamic movies of these data.
 * [DashDataFrame](https://www.github.com/AllenInstitute/DashDataFrame)  
 This is a package developed by Leila Elabaddy, Melissa Hendershott, and Forrest Collman at the Allen Institute.  It simplifies constructing dynamic visualization from pandas dataframes using [Dash](https://www.github.com/plotly/dash), including making dynamic links out to external services.  In this case, we use this to make dynamic scatterplots that allow you to select variables to plot, select and filter data points, and construct neuroglancer views of the specific locations in the dataset of those data points.
 
