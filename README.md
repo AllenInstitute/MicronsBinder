@@ -15,7 +15,6 @@ This notebook shows you how to create dynamic scatterplots that recreate some of
 * [ImageAndSegmentationDownload](notebooks/ImageAndSegmentationDownload.ipynb)  
 This notebook shows you how to create figures with overlaid EM and segmentation figures.
 
-#### Local Notebooks
 These notebooks are not intended to be run on mybinder, because they require use of VTK, which interfaces with your graphics card to make 3d graphics.  To run them you should setup a local python environment with the requirements outlined in [environment.yml](environment.yml)
 
 * [MeshExample](notebooks/intro/MeshExample.ipynb)
