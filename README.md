@@ -15,12 +15,12 @@ This notebook shows you how to create dynamic scatterplots that recreate some of
 * [ImageAndSegmentationDownload](notebooks/ImageAndSegmentationDownload.ipynb)  
 This notebook shows you how to create figures with overlaid EM and segmentation figures.
 
-### Local Notebooks
+#### Local Notebooks
 These notebooks are not intended to be run on mybinder, because they require use of VTK, which interfaces with your graphics card to make 3d graphics.  To run them you should setup a local python environment with the requirements outlined in [environment.yml](environment.yml)
 
-* [MeshExample](notebooks/local/MeshExample.ipynb)
+* [MeshExample](notebooks/intro/MeshExample.ipynb)
 This demonstrates some basic 3d visualization of a meshes and skeletons using vtk, as well as calculating shortest paths along a mesh.
-* [Render3dScaleBar](notebooks/local/Render3dScaleBar.ipynb)
+* [Render3dScaleBar](notebooks/intro/Render3dScaleBar.ipynb)
 This demonstrates two techinques to create 3d scale bars on 3d visualization plots.
 
 ### Multiscale manuscript analyses  
