@@ -7,6 +7,7 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build
 jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets jupyter-webrtc itkwidgets --no-build
 jupyter labextension install jupyterlab-dash --no-build
 jupyter lab build --minimize=False  # minimize uses too much memory
+cd $HOME
 
 funcdir="notebooks/multiscale/function/data"
 mkdir -p ${funcdir}
@@ -14,7 +15,7 @@ cd ${funcdir} \
 && gdown --id 1S2qE6-oNP_KMvkobRxswkH0DqCJDbPnu -O calcium_trace.tgz \
 && tar -xzf calcium_trace.tgz \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
-&& tar -xzf smoothed_skeletons_v185.tgz \
+&& tar -xzf smoothed_skeletons_v185.tgz
 cd $HOME
 
 mitodir="notebooks/multiscale/mitochondria/data"
@@ -23,18 +24,14 @@ cd ${mitodir} \
 && gdown --id 1OIUpHr9gVYKVagDqpom9Sx9qb5iAX5Km -O multiscale_mito_intermediate_data.tgz \
 && tar -xzf multiscale_mito_intermediate_data.tgz \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
-&& tar -xzf smoothed_skeletons_v185.tgz \
-&& mkdir -p neuronmeshes \
-&& cd neuronmeshes \
-&& gdown --id 1lPWicWMBsIiXur68Sqf_FMS5ZzHoSqLj -O neuron_meshes_v185.tgz \
-&& tar -xzf neuron_meshes_v185.tgz \
+&& tar -xzf smoothed_skeletons_v185.tgz
 cd $HOME
 
 motifdir="notebooks/multiscale/motifs/data"
 mkdir -p ${motifdir}
 cd ${motifdir} \
 && gdown --id 1SIRrG8KuobgjuByBHxRt11qkM_Fj7JSN -O multiscale_motif_intermediate_data.tgz \
-&& tar -xzf multiscale_motif_intermediate_data.tgz \
+&& tar -xzf multiscale_motif_intermediate_data.tgz
 cd $HOME
 
 resourcedir="notebooks/multiscale/resource_statistics/data"
@@ -45,5 +42,5 @@ cd ${resourcedir} \
 && mkdir -p smoothed_skels \
 && cd smoothed_skels \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
-&& tar -xzf smoothed_skeletons_v185.tgz \
+&& tar -xzf smoothed_skeletons_v185.tgz
 cd $HOME
