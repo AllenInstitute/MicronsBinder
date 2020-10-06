@@ -10,47 +10,40 @@ jupyter lab build --minimize=False  # minimize uses too much memory
 
 funcdir="notebooks/multiscale/function/data"
 mkdir -p ${funcdir}
-gdown --id 1S2qE6-oNP_KMvkobRxswkH0DqCJDbPnu -O ${funcdir}/calcium_trace.tgz \
-&& pushd ${funcdir} \
+cd ${funcdir} \
+&& gdown --id 1S2qE6-oNP_KMvkobRxswkH0DqCJDbPnu -O calcium_trace.tgz \
 && tar -xzf calcium_trace.tgz \
-&& popd
-gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O ${funcdir}/smoothed_skeletons_v185.tgz \
-&& pushd ${funcdir} \
+&& gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz \
-&& popd
+cd $HOME
 
 mitodir="notebooks/multiscale/mitochondria/data"
 mkdir -p ${mitodir}
-gdown --id 1OIUpHr9gVYKVagDqpom9Sx9qb5iAX5Km -O ${mitodir}/multiscale_mito_intermediate_data.tgz \
-&& pushd ${mitodir} \
+cd ${mitodir} \
+&& gdown --id 1OIUpHr9gVYKVagDqpom9Sx9qb5iAX5Km -O multiscale_mito_intermediate_data.tgz \
 && tar -xzf multiscale_mito_intermediate_data.tgz \
-&& popd
-mkdir -p ${mitodir}/neuronmeshes
-https://drive.google.com/file/d//view?usp=sharing
-gdown --id 1lPWicWMBsIiXur68Sqf_FMS5ZzHoSqLj -O ${mitodir}/neuronmeshes/neuron_meshes_v185.tgz \
-&& pushd ${mitodir}/neuronmeshes \
-&& tar -xzf neuron_meshes_v185.tgz \
-&& popd
-gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O ${mitodir}/smoothed_skeletons_v185.tgz \
-&& pushd data/ \
+&& gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz \
-&& popd
+&& mkdir -p neuronmeshes \
+&& cd neuronmeshes \
+&& gdown --id 1lPWicWMBsIiXur68Sqf_FMS5ZzHoSqLj -O neuron_meshes_v185.tgz \
+&& tar -xzf neuron_meshes_v185.tgz \
+cd $HOME
 
 motifdir="notebooks/multiscale/motifs/data"
 mkdir -p ${motifdir}
-gdown --id 1SIRrG8KuobgjuByBHxRt11qkM_Fj7JSN -O ${motifdir}/multiscale_motif_intermediate_data.tgz \
-&& pushd ${motifdir}/ \
+cd ${motifdir} \
+&& gdown --id 1SIRrG8KuobgjuByBHxRt11qkM_Fj7JSN -O multiscale_motif_intermediate_data.tgz \
 && tar -xzf multiscale_motif_intermediate_data.tgz \
-&& popd
+cd $HOME
 
 resourcedir="notebooks/multiscale/resource_statistics/data"
 mkdir -p ${resourcedir}
-gdown --id 1Roj4WFBofLsRQVY8FHTE_0fq9EJPKGRt -O ${resourcedir}/multiscale_resource_intermediate_data.tgz \
-&& pushd ${resourcedir} \
+cd ${resourcedir} \
+&& gdown --id 1Roj4WFBofLsRQVY8FHTE_0fq9EJPKGRt -O multiscale_resource_intermediate_data.tgz \
 && tar -xzf multiscale_resource_intermediate_data.tgz \
-&& popd
-mkdir -p ${resourcedir}/smoothed_skels
-gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O ${resourcedir}/smoothed_skels/smoothed_skeletons_v185.tgz \
-&& pushd ${resourcedir}/smoothed_skels \
+&& mkdir -p smoothed_skels \
+&& cd smoothed_skels \
+&& gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz \
-&& popd
+cd $HOME
