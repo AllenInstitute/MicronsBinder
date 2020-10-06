@@ -9,6 +9,14 @@ jupyter labextension install jupyterlab-dash --no-build
 jupyter lab build --minimize=False  # minimize uses too much memory
 cd $HOME
 
+# intro
+introdir="notebooks/intro/data"
+mkdir -p ${introdir}
+wget -q -O ${introdir}/pni_synapses_v185.csv "https://zenodo.org/record/3710459/files/pni_synapses_v185.csv?download=1"
+wget -q -O ${introdir}/soma_valence_v185.csv "https://zenodo.org/record/3710459/files/soma_valence_v185.csv?download=1"
+wget -q -O ${introdir}/soma_subgraph_synapses_spines_v185.csv "https://zenodo.org/record/3710459/files/soma_subgraph_synapses_spines_v185.csv?download=1"
+
+# multiscale/function
 funcdir="notebooks/multiscale/function/data"
 mkdir -p ${funcdir}
 cd ${funcdir} \
@@ -18,6 +26,7 @@ cd ${funcdir} \
 && tar -xzf smoothed_skeletons_v185.tgz
 cd $HOME
 
+# multiscale/mitochondria
 mitodir="notebooks/multiscale/mitochondria/data"
 mkdir -p ${mitodir}
 cd ${mitodir} \
@@ -27,6 +36,7 @@ cd ${mitodir} \
 && tar -xzf smoothed_skeletons_v185.tgz
 cd $HOME
 
+# multiscale/motifs
 motifdir="notebooks/multiscale/motifs/data"
 mkdir -p ${motifdir}
 cd ${motifdir} \
@@ -34,6 +44,7 @@ cd ${motifdir} \
 && tar -xzf multiscale_motif_intermediate_data.tgz
 cd $HOME
 
+# multiscale/resource_statistics
 resourcedir="notebooks/multiscale/resource_statistics/data"
 mkdir -p ${resourcedir}
 cd ${resourcedir} \
@@ -43,4 +54,3 @@ cd ${resourcedir} \
 && cd smoothed_skels \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz
-cd $HOME
