@@ -20,6 +20,10 @@ wget -q -O ${introdir}/soma_subgraph_synapses_spines_v185.csv "https://zenodo.or
 funcdir="notebooks/multiscale/function/data"
 mkdir -p ${funcdir}
 cd ${funcdir} \
+&& gdown --id 18mF0mqhVjVr-kUyVMpNJqO0d2zncXDap -O cell_info.csv \
+&& gdown --id 1GW1Gs8_r8FDxstjI-BmPZEs-ikPzXeXK -O cell_functional_info.csv \
+&& gdown --id 1M4UABqCXgE57FkiA18BcUtb_bahpf6yn -O pyc_all_synapse.csv \
+&& gdown --id 10GYchtwX_BaJ0PpNVELYseBObBjS-vBI -O pyc_pyc_subgraph.csv \
 && gdown --id 1S2qE6-oNP_KMvkobRxswkH0DqCJDbPnu -O calcium_trace.tgz \
 && tar -xzf calcium_trace.tgz \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
