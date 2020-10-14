@@ -9,8 +9,6 @@ from meshparty import trimesh_io
 import networkx as nx
 import h5py
 
-from . import ngl
-
 
 MESHMETA = trimesh_io.MeshMeta()
 MITOMESHDIR = ""
@@ -18,7 +16,7 @@ CELLMESHDIR = "data/neuronmeshes"
 
 
 def download_meshes(segids, overwrite=False, parallel=1,
-                    meshdir=MITOMESHDIR, cvpath=ngl.MITO_CVPATH, **kwargs):
+                    meshdir=MITOMESHDIR, cvpath=None, **kwargs):
     trimesh_io.download_meshes(
         segids, meshdir, cvpath,
         overwrite=overwrite, n_threads=parallel, **kwargs)
