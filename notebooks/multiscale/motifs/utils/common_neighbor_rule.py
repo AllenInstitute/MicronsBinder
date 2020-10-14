@@ -2,6 +2,9 @@ import itertools
 from scipy import stats
 from .motif_counts import *
 
+def intersection1d(lst1, lst2): 
+    return list(set(lst1) & set(lst2)) 
+
 def get_cnr_stats(g_):
     g = g_.to_undirected()
     cn_counts = np.zeros(10)
@@ -46,7 +49,8 @@ def get_cnr_stats(g_):
         cns_1 = list(g_.successors(ns[0]))
         cns_2 = list(g_.successors(ns[1]))
         if len(cns_1) > 0 and len(cns_2) > 0:
-            intersect = np.intersect1d(cns_1, cns_2)
+#             intersect = np.intersect1d(cns_1, cns_2)
+            intersect = intersection1d(cns_1, cns_2)
             cns = len(intersect)
             # remove bidirectional edges..
             for n in intersect:
@@ -69,9 +73,9 @@ def get_cnr_stats(g_):
         # common predecessors - unidirection
         cns_1 = list(g_.predecessors(ns[0]))
         cns_2 = list(g_.predecessors(ns[1]))
-        cns = len(np.intersect1d(cns_1, cns_2))
         if len(cns_1) > 0 or len(cns_1) > 0:
-            intersect = np.intersect1d(cns_1, cns_2)
+#             intersect = np.intersect1d(cns_1, cns_2)
+            intersect = intersection1d(cns_1, cns_2)
             cns = len(intersect)
             # remove bidirectional edges..
             for n in intersect:
