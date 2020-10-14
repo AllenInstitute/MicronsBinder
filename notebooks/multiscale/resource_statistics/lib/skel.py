@@ -17,7 +17,6 @@ from meshparty import skeleton_io
 from . import u
 
 
-CVOL = cv.CloudVolume(u.MITO_CVNAME, parallel=8, progress=False)
 SMOOTHED_SKELDIR = "data/smoothed_skels"
 SMOOTHED_LABELDIR = "data/smoothed_skels"
 
