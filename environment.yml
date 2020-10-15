@@ -20,11 +20,14 @@ dependencies:
   - seaborn
   - imageio
   - nodejs
+  - statsmodels
   - pip:
     - nglui
     - cloud-volume
     - annotationframeworkclient
     - meshparty
     - dashdataframe==0.4.1
-
-
+    - gdown
+    - networkx
+    - tqdm
+    - neuroglancer
