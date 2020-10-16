@@ -25,6 +25,7 @@ dependencies:
     - nglui
     - cloud-volume
     - annotationframeworkclient
+    - imageryclient
     - meshparty
     - dashdataframe==0.4.1
     - gdown
