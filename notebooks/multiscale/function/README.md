@@ -1,7 +1,40 @@
-# Functional data
+# Structure-function analysis (Figure 6)
+
+## DataJoint database
+This public database contains extracted structural and functional data such as visual responses and connectivity data.
+
+### Registration
+You need to be registered to access the database.  
+Please fill out the [registration form](https://forms.gle/6SeDGRT8zoLqpbfU9) to get your user id and temporary password.
+
+
+### Database configuration
+- HOST: datajoint.ninai.org
+- USER: Given after registration
+- PASSWORD: Given after registration
+
+
+### Accessing the database
+#### Connecting to the database
+```python3
+import datajoint as dj
+
+# Datajoint credentials
+dj.config["database.host"] = "datajoint.ninai.org"
+
+dj.conn() # Then it will ask for your net id and password
+
+pinky = dj.create_virtual_module("seung_pinky", "seung_pinky")
+```
+*Pinky is the nickname for this dataset named after the American animated television series, **Pinky and the Brain**.
+
+#### Fetching data
+
+## Raw data
+
 2-photon calcium imaging data acquired by Baylor College of Medicine.
 ![](figures/function_info_fig.png)
-### Raw data
+
 #### Calcium video
 - Calcium videos can be downloaded from [here](https://drive.google.com/drive/folders/1nL0_asZkqiWrgkE-tpXIswf84tEdBwq_?usp=sharing)
 - Each video is tiff file with size 256 (x) x 256 (y) x 27300 (time).
@@ -13,6 +46,7 @@
 - Each file has length 27300 (time).
 - The value indicates the angle of the directional stimulus at that time frame.
 - If it's empty (NaN), it means that the noise stimulus is shown at that time frame.
+
 
 ## Skeletons for pyramidal cells
 Skeletons for pyramidal cells can be downloaded from [here](https://drive.google.com/drive/folders/1_6jVwOx0YQE9all7cnf75xYmyWCYsiUk?usp=sharing).  
