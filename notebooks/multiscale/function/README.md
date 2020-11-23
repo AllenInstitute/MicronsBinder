@@ -7,12 +7,17 @@ This public database contains extracted structural and functional data such as v
 You need to be registered to access the database.  
 Please fill out the [registration form](https://forms.gle/6SeDGRT8zoLqpbfU9) to get your user id and temporary password.
 
+### Installation
+DataJoint for Python requires Python 3.4 or above to function properly.
+```
+pip3 install datajoint
+```
+For more information, please checkout the [DataJoint Tutorials](https://tutorials.datajoint.io/setting-up/datajoint-python.html).  
 
 ### Database configuration
 - HOST: datajoint.ninai.org
 - USER: Given after registration
 - PASSWORD: Given after registration
-
 
 ### Accessing the database
 #### Connecting to the database
@@ -26,7 +31,7 @@ dj.conn() # Then it will ask for your net id and password
 
 pinky = dj.create_virtual_module("seung_pinky", "seung_pinky")
 ```
-*Pinky is the nickname for this dataset named after the American animated television series, **Pinky and the Brain**.
+*Pinky is the nickname for this dataset named after the American animated television series, *Pinky and the Brain*.
 
 #### Fetching data
 
