@@ -1,7 +1,7 @@
 # Structure-function analysis (Figure 6)
 
 ## DataJoint database
-This public database contains extracted structural and functional data such as visual responses and connectivity data.
+This public database which contains extracted structural and functional data such as visual responses and connectivity data.
 
 ### Registration
 You need to be registered to access the database.  
