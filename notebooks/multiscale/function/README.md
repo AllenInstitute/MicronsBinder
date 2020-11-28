@@ -1,11 +1,11 @@
 # Structure-function analysis (Figure 6)
 
 ## DataJoint database
-This public database contains extracted structural and functional data such as visual responses and connectivity data.
+This public database which contains extracted structural and functional data such as visual responses and connectivity data.
 
 ### Registration
 You need to be registered to access the database.  
-Please fill out the [registration form](https://forms.gle/6SeDGRT8zoLqpbfU9) to get your user id and temporary password.
+Please fill out the [registration form](https://forms.gle/6SeDGRT8zoLqpbfU9) to receive user id and password.
 
 ### Installation
 DataJoint for Python requires Python 3.4 or above to function properly.
@@ -20,7 +20,6 @@ For more information, please checkout the [DataJoint Tutorials](https://tutorial
 - PASSWORD: Given after registration
 
 ### Accessing the database
-#### Connecting to the database
 ```python3
 import datajoint as dj
 
@@ -33,7 +32,13 @@ pinky = dj.create_virtual_module("seung_pinky", "seung_pinky")
 ```
 *Pinky is the nickname for this dataset named after the American animated television series, *Pinky and the Brain*.
 
-#### Fetching data
+### Fetching data from the database
+Example extracting visual response trace from the database.
+```python3
+key = {"segment_id": 648518346349539895, "scan_id": 2}
+trace = (pinky.EASETrace() & key).fetch1("trace")
+```
+Please refer to the [DataJoint Tutorials](https://tutorials.datajoint.io/setting-up/datajoint-python.html) for additional help.  
 
 ## Raw data
 
