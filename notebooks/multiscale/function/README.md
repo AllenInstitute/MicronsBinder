@@ -3,7 +3,7 @@
 ## DataJoint database
 This public database which contains extracted structural and functional data such as visual responses and connectivity data.  
   
-![](figures/pinky_schema.png). 
+![](figures/pinky_schema.png).   
 *Refer to [SeungLab DataJoint repository](https://github.com/seung-lab/datajoint_seung) for detailed information of the tables in the schema.
 
 ### Registration
