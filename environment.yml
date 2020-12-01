@@ -21,6 +21,7 @@ dependencies:
   - imageio
   - nodejs
   - statsmodels
+  - datajoint
   - pip:
     - nglui
     - cloud-volume
