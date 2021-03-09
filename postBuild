@@ -58,3 +58,8 @@ cd ${resourcedir} \
 && cd smoothed_skels \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz
+
+# multiscale/dendrite_synapses
+resoucedir="notebooks/multiscale/dendrite_synapses/data"
+cd ${resourcedir} \
+&& gunzip dend_df_scaled.h5
