@@ -5,9 +5,12 @@ More precisely, finding the set of skeleton nodes that is the closest to
 some mesh vertex of each mitochondrion. Labels each such mitochondrion
 with the set of skeleton node indices that is paired with it in this way.
 """
+import sys
 import time
-import itertools
 import operator
+import argparse
+import itertools
+from collections import Counter
 
 import numpy as np
 import pandas as pd
@@ -15,19 +18,19 @@ from scipy.spatial import KDTree
 import h5py
 from multiwrapper import multiprocessing_utils as mu
 
+sys.path.append(".")
 from lib import skel, mesh, u
 
 
-def main(
-    mito_filename, id_filename,
-    output_prefix, parallel=1, verbose=True):
+def main(mito_filename, id_filename,
+         output_prefix, parallel=1, verbose=True):
 
     mitodf = pd.read_csv(mito_filename, index_col=0)
 
     segids = u.read_ids(id_filename)
-    
+
     multiargs = make_batches(segids, mitodf, output_prefix, parallel)
-    
+
     if parallel == 1:
         find_assoc_mitos_batch(multiargs[0])
 
@@ -39,7 +42,6 @@ def main(
 
 
 def make_batches(segids, mitodf, output_prefix, parallel=1):
-
     n_jobs = parallel * 2 if parallel > 1 else 1
     segid_batches = np.array_split(segids, n_jobs)
 
@@ -47,7 +49,7 @@ def make_batches(segids, mitodf, output_prefix, parallel=1):
     for batch in segid_batches:
         mitoid_batch = [list(mitodf.index[mitodf.cellid == segid])
                         for segid in batch]
-        mitoid_batches.append(mitoid_batch)                 
+        mitoid_batches.append(mitoid_batch)
 
     assert len(segid_batches) == len(mitoid_batches)
 
@@ -65,7 +67,7 @@ def find_assoc_mitos_batch(args):
         assocs = find_assoc_mitos(segid, mitoids)
         write_assocs(assocs, segid, output_prefix)
 
-        
+
 def find_assoc_mitos(segid, mitoids, parallel=1):
     """Find the skeleton nodes associated with each mitochondrion"""
     start = time.time()
@@ -90,16 +92,12 @@ def find_assoc_mitos(segid, mitoids, parallel=1):
 
 def read_skel_kdtree(segid):
     segskel = skel.read_smoothed_skel(segid)
-    print(len(segskel.vertices))
 
     return KDTree(segskel.vertices)
 
 
 def add_associations(kdtree, mesh, meshid, records):
-    records[meshid] = set()
-    for v in mesh.vertices:
-        i = kdtree.query(v)[1]
-        records[meshid].add(i)
+    records[meshid] = Counter(kdtree.query(v)[1] for v in mesh.vertices)
 
     return records
 
@@ -107,9 +105,13 @@ def add_associations(kdtree, mesh, meshid, records):
 def write_assocs(assocs, segid, output_prefix):
     items = assocs.items()
 
+    def getcounteritems(assoc_item):
+        # extracting the items from each counter
+        return assoc_item[1].items()
+
     data = np.array(
              list(itertools.chain.from_iterable(
-                      map(operator.itemgetter(1), items))),
+                      map(getcounteritems, items))),
              dtype=np.uint32)
 
     mitoids = np.array(
@@ -118,8 +120,7 @@ def write_assocs(assocs, segid, output_prefix):
 
     ptr = 0
     ptrs = list()
-    for (k, v) in items:
-        nodeid = k
+    for (mitoid, v) in items:
         ptrs.append((ptr, ptr+len(v)))
         ptr += len(v)
 
@@ -131,8 +132,6 @@ def write_assocs(assocs, segid, output_prefix):
 
 
 if __name__ == "__main__":
-    import argparse
-
     parser = argparse.ArgumentParser()
 
     parser.add_argument("mito_filename")
