@@ -25,6 +25,16 @@ This demonstrates two techinques to create 3d scale bars on 3d visualization plo
 ### Multiscale manuscript analyses  
 These notebooks walk through some newer analyses. See each [directory](notebooks/multiscale) to see the types of analysis.
 
+
+# Local environment
+A local environment for running the intermediate code generation scripts can be installed using the Anaconda environment installed within the binder and the `postBuild` script
+```
+conda env create -f environment.yml
+bash postBuild
+```
+This installs the required python packages for running the basic code and the jupyter extensions for any plots and visualizations.
+
+
 # Related projects
 The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed
 by Jeremy Maitin-Shepard from the Connectomics group at Google).
