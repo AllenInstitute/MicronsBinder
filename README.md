@@ -3,6 +3,7 @@
 # MicronsBinder
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
 
+
 # Contents
 
 ### Introductory Notebooks
@@ -34,6 +35,13 @@ bash postBuild
 ```
 This installs the required python packages for running the basic code and the jupyter extensions for any plots and visualizations.
 
+If you'd like to use these notebooks as part of your general jupyter environment. You'll likely need to install this environment into your ipython kernels.
+```
+conda activate micronsbinder
+python -m ipykernel install --user --name=micronsbinder
+```
+You can then select this python environment when opening the relevant notebooks.
+
 
 # Related projects
 The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed
@@ -51,6 +59,7 @@ This is a python library developed principally by Will Silversmith from the Seun
 This is a package developed by Sven Dorkenwald (Princeton), Forrest Collman (Allen), and Casey Schneider-Mizell (Allen) to make downloading meshes (via [CloudVolume](https://www.github.com/seung-lab/cloud-volume)), performing analysis (with tools like [trimesh](https://github.com/mikedh/trimesh), and [scipy](https://www.scipy.org/)) and visualization (via [vtk](https://pypi.org/project/vtk/)) of neuronal meshes easier.  There are also some tools for helping make dynamic movies of these data.
 * [DashDataFrame](https://www.github.com/AllenInstitute/DashDataFrame)  
 This is a package developed by Leila Elabaddy, Melissa Hendershott, and Forrest Collman at the Allen Institute.  It simplifies constructing dynamic visualization from pandas dataframes using [Dash](https://www.github.com/plotly/dash), including making dynamic links out to external services.  In this case, we use this to make dynamic scatterplots that allow you to select variables to plot, select and filter data points, and construct neuroglancer views of the specific locations in the dataset of those data points.
+
 
 # Level of Support
 We are releasing this repository as-is, and plan to update it without a fixed schedule.
