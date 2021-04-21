@@ -24,7 +24,7 @@ This demonstrates some basic 3d visualization of a meshes and skeletons using vt
 This demonstrates two techinques to create 3d scale bars on 3d visualization plots.
 
 ### Multiscale manuscript analyses  
-These notebooks walk through some newer analyses. See each [directory](notebooks/multiscale) to see the types of analysis.
+These notebooks walk through some newer analyses. See each [directory](notebooks/multiscale) for more details.
 
 
 # Local environment
