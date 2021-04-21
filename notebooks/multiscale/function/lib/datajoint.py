@@ -1,4 +1,7 @@
-# DataJoint
+"""
+Helper functions for fetching data from DataJoint database.
+"""
+
 # Get soma center coordinates ([nm])
 def get_soma_loc(database, seg_id):
     
