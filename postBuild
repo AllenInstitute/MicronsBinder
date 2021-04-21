@@ -1,3 +1,5 @@
+home=$( pwd )
+
 mkdir $HOME/.jupyter
 echo "c.NotebookApp.iopub_data_rate_limit=1e22" >> $HOME/.jupyter/jupyter_notebook_config.py
 jupyter nbextension install --py --sys-prefix itkwidgets
@@ -7,7 +9,7 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build
 jupyter labextension install jupyter-matplotlib jupyterlab-datawidgets jupyter-webrtc itkwidgets --no-build
 jupyter labextension install jupyterlab-dash --no-build
 jupyter lab build --minimize=False  # minimize uses too much memory
-cd $HOME
+cd $home
 
 # intro
 introdir="notebooks/intro/data"
@@ -23,7 +25,7 @@ cd ${funcdir} \
 && gdown --id 1GW1Gs8_r8FDxstjI-BmPZEs-ikPzXeXK -O cell_functional_info.csv \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz
-cd $HOME
+cd $home
 
 # multiscale/mitochondria
 mitodir="notebooks/multiscale/mitochondria/data"
@@ -33,7 +35,7 @@ cd ${mitodir} \
 && tar -xzf multiscale_mito_intermediate_data.tgz \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz
-cd $HOME
+cd $home
 
 # multiscale/motifs
 motifdir="notebooks/multiscale/motifs/data"
@@ -41,7 +43,7 @@ mkdir -p ${motifdir}
 cd ${motifdir} \
 && gdown --id 1SIRrG8KuobgjuByBHxRt11qkM_Fj7JSN -O multiscale_motif_intermediate_data.tgz \
 && tar -xzf multiscale_motif_intermediate_data.tgz
-cd $HOME
+cd $home
 
 # multiscale/resource_statistics
 resourcedir="notebooks/multiscale/resource_statistics/data"
@@ -53,3 +55,4 @@ cd ${resourcedir} \
 && cd smoothed_skels \
 && gdown --id 1Tpa-p7rwOZ65rIwDPbm4famUFtqhbqOK -O smoothed_skeletons_v185.tgz \
 && tar -xzf smoothed_skeletons_v185.tgz
+cd $home
