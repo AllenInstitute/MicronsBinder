@@ -3,9 +3,11 @@
 ## Outline
 ### scripts
 - `compute_neurite_length.py`: Compute axon/dendrite length using skeletons.
-	```
-	python compute_neurite_length.py
-	```	
+- `compute_degree.py`: Compute out/in-degree from the connectivity graph.
+```python3
+python [script_name.py]
+```
+The results will be saved in the `data` folder.
 
 
 ## DataJoint database
