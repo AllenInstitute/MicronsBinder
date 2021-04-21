@@ -41,7 +41,7 @@ def labelcompartments(mitodf, mitotoskel, thresh=1_000):
     majlbls = [compartment.ENGLISHLABELS[lbl] for lbl in majlbls_]
     labellookup = dict(zip(ids, majlbls))
 
-    unknownlabel = ENGLISHLABELS[4]
+    unknownlabel = compartment.ENGLISHLABELS[4]
     mindist = mitotoskel.groupby("mitoid")["nodelbl", "nodedist"].min()
     idsnearsoma = set(mindist.index[(mindist.nodedist < thresh) &
                                     (mindist.nodelbl != 0)].tolist())
