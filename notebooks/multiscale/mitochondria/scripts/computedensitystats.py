@@ -1,4 +1,19 @@
-"""Mitochondrial density analysis"""
+"""
+Mitochondrial density analysis
+
+For each compartment branch, we count the number of synapses associated
+with each branch and compute its total mitochondrial volume. We then
+compute synapse and mitochondrial density metrics, and write out
+two dataframes as a result - one describing a branch per row, and
+another describing a cell per row, where each branch of a compartment
+is summed within each cell.
+
+The mitochondrial segmentation was performed in a larger volume than the
+cellular segmentation. This means that several mitochondria poke out from
+the tips of branches at the ends of the volume. To quantify mitochondrial
+density accurately at these points, we only count the volume that overlaps
+with a given segmentation ID.
+"""
 import sys
 import argparse
 from collections import Counter
@@ -10,14 +25,14 @@ sys.path.append(".")
 from lib import skel, compartment, u
 
 
-MITOSTATS_FILENAME = "intermeds/200811_pinky100_mito_cellswskel.csv"
-ID_FILENAME = "intermeds/200712_clean_and_complete.csv"
-MITOTOSKEL_FILENAME = "intermeds/210329_dist_data_pyr_refine.h5"
-POSTSYN_FILENAME = "intermeds/200527_neuron_postsyn.csv"
-BRANCHSTATS_FILENAME = "intermeds/210324_basicbranchstats.csv"
-OVERLAP_FILENAME = "intermeds/200509_v185_overlaps.df"
-NUCLEUSSTATS_FILENAME = "intermeds/200713_nucleus_info.df"
-NUCLEUSLOOKUP_FILENAME = "intermeds/200713_nucleus_lookup.csv"
+MITOSTATS_FILENAME = "data/fullmitostats.csv"
+ID_FILENAME = "data/pycids.csv"
+MITOTOSKEL_FILENAME = "data/mitotoskel.h5"
+POSTSYN_FILENAME = "data/pycinputs.csv"
+BRANCHSTATS_FILENAME = "data/basicbranchstats.csv"
+OVERLAP_FILENAME = "data/mitochondriaoverlap.csv"
+NUCLEUSSTATS_FILENAME = "data/pni_nucleus_segments.csv"
+NUCLEUSLOOKUP_FILENAME = "data/pni_nucleus_lookup.csv"
 
 VOXELRES = [3.58, 3.58, 40]  # voxel resolution in nm
 # volume of a voxel in um^3
@@ -196,6 +211,8 @@ if __name__ == "__main__":
     parser.add_argument("basicbranchstats_filename",
                         default=BRANCHSTATS_FILENAME)
     parser.add_argument("overlap_filename", default=OVERLAP_FILENAME)
+    parser.add_argument("nucleusstats_filename", default=NUCLEUSSTATS_FILENAME)
+    parser.add_argument("nucleuslookup_filename", default=NUCLEUSLOOKUP_FILENAME)
     parser.add_argument("fullbranchstats_filename")
     parser.add_argument("cellwisestats_filename")
 

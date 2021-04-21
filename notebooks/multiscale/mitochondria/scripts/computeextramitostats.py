@@ -1,3 +1,10 @@
+"""
+Computing 'extra' mitochondria stats
+
+This adds a surface area measurement, mitochondrial complexity index,
+and a compartment assignment to each row of the mitochondria stats
+data frame.
+"""
 import sys
 import math
 import argparse

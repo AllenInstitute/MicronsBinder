@@ -34,5 +34,7 @@ python scripts/computedensitystats.py \
     data/pycids.csv data/pycinputs.csv \
     data/basicbranchstats.csv \
     data/mitochondriaoverlap.csv \
+    data/pni_nucleus_segments.csv \
+    data/pni_nucleus_lookup.csv \
     data/fullbranchstats.csv \
     data/cellwisestats.csv
