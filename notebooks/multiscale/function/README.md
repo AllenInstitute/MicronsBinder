@@ -1,4 +1,12 @@
-# Structure-function analysis (Figure 6)
+# Structure-function analysis
+
+## Outline
+### scripts
+- `compute_neurite_length.py`: Compute axon/dendrite length using skeletons.
+	```
+	python compute_neurite_length.py
+	```	
+
 
 ## DataJoint database
 This public database which contains extracted structural and functional data such as visual responses and connectivity data.  
