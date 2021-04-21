@@ -1,7 +1,7 @@
 # Mitochondria analysis
 
 * `visualize.ipynb`
-  A brief notebook that demonstrates one way to view a neuron rendered with its overlapping mitochondria.
+  A brief notebook that demonstrates a way to view a neuron rendered with its overlapping mitochondria.
 * `compartment_comparison.ipynb` 
   An analysis notebook comparing mitochondria across neuronal compartments (Figure 4D)
 * `density_analysis.ipynb`
