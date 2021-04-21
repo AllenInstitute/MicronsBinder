@@ -38,7 +38,7 @@ cd $home
 mitodir="notebooks/multiscale/mitochondria/data"
 mkdir -p ${mitodir}
 cd ${mitodir} \
-&& gdown --id 1OIUpHr9gVYKVagDqpom9Sx9qb5iAX5Km -O multiscale_mito_intermediate_data.tgz \
+&& gdown --id 1Nhucb9SHVOtnPRAz27IYkjH0qjEctGOJ -O multiscale_mito_intermediate_data.tgz \
 && tar -xzf multiscale_mito_intermediate_data.tgz
 cd $home
 
