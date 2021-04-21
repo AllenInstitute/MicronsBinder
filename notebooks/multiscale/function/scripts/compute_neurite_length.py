@@ -3,7 +3,6 @@ Compute axon/dendrite length [um] using skeletons.
 """
 import numpy as np
 import pandas as pd
-import argparse
 
 from meshparty import skeleton_io
 
@@ -31,7 +30,6 @@ def main():
 			print("{} / {} completed.".format(i+1, n))
 
 	write_data(seg_id_list, dendrite_length, axon_length)
-	print("Results saved in ../data/neurite_length.csv")
 
 
 def load_skeleton(seg_id):
@@ -74,6 +72,7 @@ def write_data(seg_ids, dendrite_length, axon_length):
 													"dendrite_len": dendrite_length})
 	output_fname = "../data/neurite_length.csv"
 	df.to_csv(output_fname, index=False)
+	print("Results saved in {}".format(output_fname))
 
 
 if __name__ == "__main__":
