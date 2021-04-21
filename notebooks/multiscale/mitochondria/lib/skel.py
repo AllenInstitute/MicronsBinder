@@ -23,57 +23,20 @@ from . import ngl
 
 
 CVOL = cv.CloudVolume(ngl.MITO_CVPATH, parallel=8, progress=False)
-NEURON_SKELDIR = "intermeds/skeletons_v185"
-NEURON_LABELDIR = "intermeds/skeletons_v185_labels"
-NEURON_ALTLABELDIR = "intermeds/skeletons_v185_altlabels"
-INTERNEURON_SKELDIR = "intermeds/interneuron_data/"
-INTERNEURON_LABELDIR = "intermeds/interneuron_data/"
-SKEL_ASSOC_DIR = "intermeds/mito_to_skel"
-SMOOTHED_SKELDIR = "intermeds/smoothed_skeletons_v185"
+SKELDIR = "../data/smoothed_skeletons_v185"
+SKEL_ASSOC_DIR = "data/mitotoskel"
 
 
 def read_neuron_skel(segid, scale=True):
-    smoothed_filename = f"{SMOOTHED_SKELDIR}/{segid}_skeleton.h5"
-    inter_filename = f"{INTERNEURON_SKELDIR}/{segid}_skeleton.h5"
-    backup_filename = f"{NEURON_SKELDIR}/{segid}.h5"
+    filename = f"{SKELDIR}/{segid}_skeleton.h5"
 
-    if os.path.exists(smoothed_filename):
-        filename = smoothed_filename
-        scale = False  # <- these have already been scaled
-    elif os.path.exists(inter_filename):
-        filename = inter_filename
-        scale = True
-    else:
-        filename = backup_filename
-        scale = True
-
-    skel = skeleton_io.read_skeleton_h5(filename)
-
-    if scale:
-        skel.voxel_scaling = [0.895, 0.895, 1]
-
-    return skel
+    return skeleton_io.read_skeleton_h5(filename)
 
 
 def read_neuron_complbls(segid):
-    smoothed_filename = f"{SMOOTHED_SKELDIR}/{segid}_skeleton_label.npy"
-    inter_filename = f"{INTERNEURON_LABELDIR}/{segid}_skeleton_label.json"
-    backup_filename = f"{NEURON_LABELDIR}/{segid}.npy"
+    filename = f"{SKELDIR}/{segid}_skeleton_label.npy"
 
-    if os.path.exists(smoothed_filename):
-        return np.load(smoothed_filename)
-
-    elif os.path.exists(inter_filename):
-        with open(inter_filename) as f:
-            lbl = np.array(json.load(f))
-            # converting label convention for consistency
-            lbl[lbl == 1] = 3
-            lbl[lbl == 2] = 1
-            lbl[lbl == 3] = 2
-
-            return lbl
-    else:
-        return np.load(backup_filename)
+    return np.load(smoothed_filename)
 
 
 def read_skel_and_labels(segid, refine=False):
