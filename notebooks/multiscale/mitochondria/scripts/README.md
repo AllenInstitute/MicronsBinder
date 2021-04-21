@@ -2,7 +2,7 @@
 
 These scripts are designed to be run from the `mitochondria` directory above this one.
 
-### Computing basic branch statistics
+## Computing basic branch statistics
 Here, a branch refers to a connected component of a skeleton that possesses
 the same compartment label. This means that branches can also refer to the
 soma.
@@ -19,7 +19,7 @@ python scripts/computebasicbranchstats.py \
 ```
 
 
-### Associating mitochondria to skeleton nodes
+## Associating mitochondria to skeleton nodes
 More precisely, finding the set of skeleton nodes that is the closest to
 some mesh vertex of each mitochondrion. Labels each such mitochondrion
 with the set of skeleton node indices that is paired with it in this way.
@@ -35,7 +35,7 @@ python scripts/assemblemitotoskel.py \
 ```
 
 
-### Computing MCI and assigning mitochondria to compartments
+## Computing MCI and assigning mitochondria to compartments
 This adds a surface area measurement, mitochondrial complexity index,
 and a compartment assignment to each row of the mitochondria stats
 data frame.
@@ -49,7 +49,7 @@ python scripts/computeextramitostats.py \
 ```
 
 
-### Computing density statistics
+## Computing density statistics
 For each compartment branch, we count the number of synapses associated
 with each branch and compute its total mitochondrial volume. We then
 compute synapse and mitochondrial density metrics, and write out
