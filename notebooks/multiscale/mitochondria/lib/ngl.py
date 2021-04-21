@@ -5,7 +5,7 @@ MITO_CVPATH = "https://seungdata.princeton.edu/pinky100-mito/seg_191220"
 NUC_CVPATH = "https://seungdata.princeton.edu/pinky100-nuclei/seg"
 
 IMG_SOURCE = f"precomputed://{IMG_CVPATH}"
-SEG_SOURCE = f"precomputed://{SEG_GS_CVPATH}"
+SEG_SOURCE = f"precomputed://{SEG_CVPATH}"
 MITO_SOURCE = f"precomputed://{MITO_CVPATH}"
 NUC_SOURCE = f"precomputed://{NUC_CVPATH}"
 CLF_CVPATH = f"precomputed://{CLF_CVPATH}"

@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -95,11 +96,14 @@ def scatterplot(x, y, xlbl=None, ylbl=None,
                 size=15, marker=True, color='k'):
     """Plots a scatter plot along with a linear fit and pearson correlation"""
 
+    # getting rid of an ugly warning message
+    warnings.filterwarnings("ignore", category=FutureWarning)
     if marker is True:
         sns.scatterplot(x, y, color=color, alpha=0.8, edgecolor=None, s=size)
     else:
         #plt.errorbar(x, y, fmt='.', c='k')
         plt.scatter(x, y, color=color, s=size, marker=marker)
+    
 
     fit = plot_linear_fit(x, y) if linear_fit else None
 
