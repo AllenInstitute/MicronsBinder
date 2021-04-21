@@ -1,6 +1,6 @@
 # Computing intermediate data
 
-These scripts are written to be run from the `mitochondria` directory above this one.
+These scripts are designed to be run from the `mitochondria` directory above this one.
 
 ### Computing basic branch statistics
 NOTE: this requires downloading the meshes through downloadNeuronMeshes.sh
@@ -11,7 +11,7 @@ python scripts/computebasicbranchstats.py \
 ```
 
 
-# Associating mitochondria to skeleton nodes
+### Associating mitochondria to skeleton nodes
 NOTE: this requires downloading the mitochondria meshes (through downloadmitomeshes.py)
 ```
 python scripts/mitotoskel.py \
