@@ -28,3 +28,7 @@
   A dataframe that adds synapse count, synapse surface density, mitochondrial volume, and mitochondrial volume density to the branch statistics in `basicbranchstats.csv`. Computed by `scripts/computedensitystats.py`
 * `cellwisestats.csv`
   A dataframe that agglomerates the statistics from `fullbranchstats.csv` for each cell's compartments in bulk. Created by `scripts/computedensitystats.py`
+
+### Scripts
+
+See `scripts/README.md` and `scripts/derivedata.sh` for a walkthrough of how to compute the intermediate data.
