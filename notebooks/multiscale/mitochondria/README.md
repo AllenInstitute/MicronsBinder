@@ -23,12 +23,12 @@ Regulation of mitochondrion size in neurons affects synaptic plasticity ([Divaka
 
 ### Intermediate data
 
+* `pni_mito_cellswskel_v185_fullstats.csv`
+  A dataframe that adds a surface area measurement, the mitochondrial complexity index, and an inferred compartment label for each mitochondrion in `pni_mito_cellswskel_v185.csv`. Created by `scripts/computeextramitostats.py`
 * `basicbranchstats.csv`
   Contains branch IDs, volume measurements and surface area measurement for each compartment branch of the analyzed cells. Created by `scripts/computebasicbranchstats.py`
 * `mitotoskel.h5`
   Contains associations between mitochondria and the skeleton nodes of each cell. Created by `scripts/mitotoskel.py`
-* `fullmitostats.csv`
-  A dataframe that adds a surface area measurement, the mitochondrial complexity index, and an inferred compartment label for each mitochondrion in `pni_mito_cellswskel_v185.csv`. Created by `scripts/computeextramitostats.py`
 * `fullbranchstats.csv`
   A dataframe that adds synapse count, synapse surface density, mitochondrial volume, and mitochondrial volume density to the branch statistics in `basicbranchstats.csv`. Computed by `scripts/computedensitystats.py`
 * `cellwisestats.csv`

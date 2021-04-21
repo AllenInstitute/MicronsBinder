@@ -30,7 +30,7 @@ python scripts/computeextramitostats.py \
 
 # Computing density statistics
 python scripts/computedensitystats.py \
-    data/fullmitostats.csv \
+    data/pni_mito_cellswskel_v185_fullstats.csv \
     data/pycids.csv data/pycinputs.csv \
     data/basicbranchstats.csv \
     data/mitochondriaoverlap.csv \

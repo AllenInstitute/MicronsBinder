@@ -45,7 +45,7 @@ NOTE: this requires downloading the mitochondria meshes (through downloadmitomes
 python scripts/computeextramitostats.py \
     data/pni_mito_cellswskel_v185.csv \
     data/mitotoskel.h5 \
-    data/fullmitostats.csv
+    data/pni_mito_cellswskel_v185_fullstats.csv
 ```
 
 
@@ -64,7 +64,7 @@ density accurately at these points, we only count the volume that overlaps
 with a given segmentation ID.
 ```
 python scripts/computedensitystats.py \
-    data/fullmitostats.csv \
+    data/pni_mito_cellswskel_v185_fullstats.csv \
     data/pycids.csv data/pycinputs.csv \
     data/basicbranchstats.csv \
     data/mitochondriaoverlap.csv \
