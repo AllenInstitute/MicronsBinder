@@ -30,7 +30,7 @@ These include:
 * [Motif analysis](notebooks/multiscale/motifs) of a proofread synaptic connectivity graph between pyramidal cells.
 * [Functional analysis](notebooks/multiscale/function) of a subset of the same pyramidal cells based on two-photon calcium imaging. The analysis relates local connectivity to function.
 * [Mitochondria analysis](notebooks/multiscale/mitochondria) comparing mitochondria across neuronal compartments (axon, dendrite, soma), as well as a relation between mitochondrial density and synapse density.
-* [Resource statistics](notebooks/multiscale/resource_statistics) that summarize neurite branch length and the expected "completeness" of the dendritic arbors in the volume.
+* [Resource statistics](notebooks/multiscale/resource_statistics) that summarize neurite branch length and the expected completeness of the dendritic arbors in the volume.
 
 See each [directory](notebooks/multiscale) and our [biorxiv manuscript](https://www.biorxiv.org/content/10.1101/2020.10.14.338681v3) for more details.
 
