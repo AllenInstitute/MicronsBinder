@@ -8,7 +8,10 @@
 python [script_name.py]
 ```
 The results will be saved in the `data` folder.
-
+### notebooks
+- `structure_function_analysis.ipynb` (Figure 7): Analysis testing whether visual response (response strength, intermittency, OSi) is correlated with local connectivity. 
+- `orientation_direction_tuning.ipynb`: Compute tuning curves and determine significantly tuned cells with permutation test.
+- `spatial_restricted_permutation_test.ipynb` (Figure S7): Spatial-restricted permutation test to test whether the response strength, intermittency, and OSi are correlated with in-connection density without spatial bias.
 
 ## DataJoint database
 This public database which contains extracted structural and functional data such as visual responses and connectivity data.  
@@ -39,7 +42,7 @@ import datajoint as dj
 # Datajoint credentials
 dj.config["database.host"] = "datajoint.ninai.org"
 
-dj.conn() # Then it will ask for your net id and password
+dj.conn() # Then it will ask for your id and password
 
 pinky = dj.create_virtual_module("seung_pinky", "seung_pinky")
 ```
