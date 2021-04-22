@@ -35,8 +35,14 @@ NUCLEUSSTATS_FILENAME = "data/pni_nucleus_segments.csv"
 NUCLEUSLOOKUP_FILENAME = "data/pni_nucleus_lookup.csv"
 
 VOXELRES = [3.58, 3.58, 40]  # voxel resolution in nm
+NUCLEUSVOXELRES = [VOXELRES[0]*6, VOXELRES[1]*6, VOXELRES[2]]
 # volume of a voxel in um^3
-VOXELVOL = [VOXELRES[0]/1000., VOXELRES[1]/1000., VOXELRES[2]/1000.]
+VOXELVOL = (VOXELRES[0]/1000.
+            * VOXELRES[1]/1000.
+            * VOXELRES[2]/1000.)
+NUCLEUSVOXELVOL = (NUCLEUSVOXELRES[0]/1000.,
+                   * NUCLEUSVOXELRES[1]/1000.,
+                   * NUCLEUSVOXELRES[2]/1000.)
 
 
 def main(mitostats_filename, id_filename, mitotoskel_filename,
@@ -140,16 +146,16 @@ def synapsesbybranch(cellid, postsyndf):
         postsyndf[postsyndf.post_pt_root_id == cellid]) * VOXELRES
 
     cellskel, complbl = skel.read_skel_and_labels(cellid, refine=False)
-    branchlbl = skel.branches(cellskel, complbl)
+    branchids, _ = skel.branches(cellskel, complbl)
 
     kdt = u.KDTree(cellskel.vertices)
     nodecounts = Counter(kdt.query(centroids)[1])
 
     branchcount = Counter()
     for (node, count) in nodecounts.items():
-        branchcount[branchlbl[node]] += count
+        branchcount[branchids[node]] += count
 
-    return {i: branchcount[i] for i in np.unique(branchlbl)}
+    return {i: branchcount[i] for i in np.unique(branchids)}
 
 
 def addmitovolumes(branchdf, ids, mitodf, mitotoskeldf):
@@ -169,12 +175,12 @@ def mitovolbybranch(cellid, mitodf, mitotoskeldf):
     Returns a dictionary mapping branch ID to a total volume measurement.
     """
     cellskel, complbl = skel.read_skel_and_labels(cellid, refine=False)
-    branchlbl = skel.branches(cellskel, complbl)
+    branchids, _ = skel.branches(cellskel, complbl)
 
     mitovols = dict()
-    branchids = np.unique(branchlbl)
+    branchids = np.unique(branchids)
     for i in branchids:
-        nodeids = np.flatnonzero(branchlbl == i)
+        nodeids = np.flatnonzero(branchids == i)
         branchcomplbl = complbl[nodeids[0]]
         engcomplbl = compartment.LABELMAP[branchcomplbl]
 
@@ -194,11 +200,33 @@ def mitovolbybranch(cellid, mitodf, mitotoskeldf):
 
 
 def computedensities(branchdf):
-    pass
+    """Computing mitochondrial and synapse density
+
+    Mitochondrial volume is normalized by volume, and synapse density
+    is normalized by surface area
+    """
+    branchdf["mitovoldensity"] = branchdf["mitovol"] / branchdf["volume"]
+    branchdf["synapsedensity"] = branchdf["synapsecount"] / branchdf["surfacearea"]
+
+    return branchdf
 
 
 def groupcells(branchdf, nucleusdf, nucleuslookup):
-    pass
+    """Agglomerating branch data into cells and computing cytosolic volume"""
+    celldf = branchdf.groupby(["cellid", "complbl"]).sum()[
+        ["volume", "synapsecount", "surfacearea", "mitovol"]].reset_index()
+
+    # Adding nucleus volume
+    nucleusdf["vol"] = nucleusdf["size"] * NUCLEUSVOXELVOL
+    nucleusvol = [nucleusdf["vol"].loc[nucleuslookup[i]]
+                  for i in cellwise.loc[cellwise.complbl == 0, "cellid"]]
+    cellwise.loc[cellwise.complbl == 0, "nucleusvol"] = nucleusvol
+    cellwise.loc[cellwise.complbl != 0, "nucleusvol"] = 0
+
+    # Computing cytosolic volume (volume - nucleusvol)
+    cellwise["cytovol"] = cellwise["volume"] - cellwise["nucleusvol"]
+
+    return cellwise
 
 
 if __name__ == "__main__":

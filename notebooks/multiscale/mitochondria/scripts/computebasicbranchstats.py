@@ -91,7 +91,7 @@ def skelbranches(cellskel, complbl):
     somadists = compartment.compute_node_distance_to_soma(
                     cellskel, complbl, binary=True)
 
-    branchlbl_, _ = skel.find_branches(cellskel, complbl, somadists)
+    branchlbl_, _ = skel.branches(cellskel, complbl, somadists)
     return np.array([branchlbl_[i] for i in range(len(cellskel.vertices))])
 
 
