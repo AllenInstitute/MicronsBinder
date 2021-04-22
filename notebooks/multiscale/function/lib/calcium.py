@@ -2,6 +2,7 @@
 Visual response related functions.
 """
 import numpy as np
+from lib.tuning import tuning_curve
 
 
 def get_section(conditions, angle):
@@ -30,7 +31,7 @@ def get_section(conditions, angle):
     section_list.append((st_idx[i], end_idx[i]+1))
     
   return section_list
-    
+
 
 def get_peakamp_tdarray(trace, condition):
 
@@ -91,6 +92,22 @@ def get_active_tdarray(spike, condition, thr=3):
         tdarray[j,i] = 0
                 
   return tdarray
+
+
+def compute_response_strength(trace, condition, cell_type="os"):
+
+	response_array = get_peakamp_tdarray(trace, condition)
+
+	tune = tuning_curve(response_array)
+	dir_pref = np.argmax(tune)
+	dir_opp = np.remainder(dir_pref+8, 16)
+
+	if cell_type=="ds":
+		pref_idx = [dir_pref]
+	else:
+		pref_idx = [dir_pref, dir_opp]
+
+	return np.nanmean(response_array[:,pref_idx])
 
 
 def compute_intermittency(spike, condition, pref_idx, thr=3):

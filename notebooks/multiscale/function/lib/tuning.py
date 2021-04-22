@@ -7,10 +7,10 @@ from scipy.stats import percentileofscore
 
 def tuning_curve(tdarray):
     
-    u, s, vh = np.linalg.svd(tdarray, full_matrices=False)
-    tune = np.abs(vh[0,:])
-    
-    return tune
+  u, s, vh = np.linalg.svd(tdarray, full_matrices=False)
+  tune = np.abs(vh[0,:])
+  
+  return tune
 
 
 def dsi(tune):

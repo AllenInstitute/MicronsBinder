@@ -2,7 +2,9 @@
 For plotting.
 """
 import numpy as np
+import matplotlib.pyplot as plt
 import statsmodels.api as sm
+from scipy.stats import pearsonr
 
 from lib.calcium import get_section
 
@@ -51,6 +53,31 @@ def view_trials(trace, condition, show_lines=True):
   plt.show()
 
 
+def plot_linear_fit(xval, yval, xlab="", ylab="", return_result=True):
+
+  Xval = sm.add_constant(xval)
+  re = sm.OLS(yval, Xval).fit()
+
+  xrng = np.max(xval) - np.min(xval)
+  xlin = np.linspace(np.min(xval)-0.01*xrng,np.max(xval)+0.01*xrng,100)
+  Xlin = sm.add_constant(xlin)
+  dt = re.get_prediction(Xlin).summary_frame(alpha = 0.2)
+
+  plt.figure()
+  plt.plot(xval, yval, 'k.', alpha=0.7)
+  plt.plot(xlin, dt["mean"], '-', alpha=0.8)
+  plt.fill_between(
+          xlin, dt["obs_ci_lower"], dt["obs_ci_upper"],
+          alpha=0.2, color="gray")
+  plt.xlabel(xlab, fontsize=12)
+  plt.ylabel(ylab, fontsize=12)
+  plt.show()
+    
+  if return_result:
+    r,p = pearsonr(xval, yval)
+    print("r = {}, p = {}".format(r,p))
+
+
 def plot_spatial_ax(ax, xval, yval, nbins=5, xlab="", ylab="In-conn. density ($\mu m^{-1}$)"):
     
   bins = np.linspace(xval.min(), xval.max()*1.001, nbins)
@@ -63,7 +90,7 @@ def plot_spatial_ax(ax, xval, yval, nbins=5, xlab="", ylab="In-conn. density ($\
   Xlin = sm.add_constant(xlin)
   dt = re.get_prediction(Xlin).summary_frame(alpha = 0.2)
 
-  ax.plot(xval, yval, 'k.', alpha=0.2)
+  ax.plot(xval, yval, 'k.', alpha=0.7)
   ax.fill_between(
       xlin, dt["obs_ci_lower"], dt["obs_ci_upper"],
       alpha=0.2, color="gray")
@@ -76,5 +103,3 @@ def plot_spatial_ax(ax, xval, yval, nbins=5, xlab="", ylab="In-conn. density ($\
   ax.set_xlabel(xlab, fontsize=20, fontname="Helvetica")
   ax.set_ylabel(ylab, fontsize=20, fontname="Helvetica")
   ax.set_yticks(np.arange(0,0.009,0.002))
-  ax.set_xticklabels(ax.get_xticks().astype("int"), fontsize=15, fontname="Helvetica")
-  ax.set_yticklabels(np.round(np.arange(0,0.009,0.002),3), fontsize=15, fontname="Helvetica")
