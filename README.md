@@ -1,7 +1,8 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AllenInstitute/MicronsBinder/master?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AllenInstitute/MicronsBinder/master?urlpath=lab) [![Build Status](https://travis-ci.com/seung-lab/MicronsBinder.svg?branch=master)](https://travis-ci.com/seung-lab/MicronsBinder) [![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/download/releases/3.7.0/)
 
 # MicronsBinder
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
+
 
 # Contents
 
@@ -15,7 +16,7 @@ This notebook shows you how to create dynamic scatterplots that recreate some of
 * [ImageAndSegmentationDownload](notebooks/ImageAndSegmentationDownload.ipynb)  
 This notebook shows you how to create figures with overlaid EM and segmentation figures.
 
-These notebooks are not intended to be run on mybinder, because they require use of VTK, which interfaces with your graphics card to make 3d graphics.  To run them you should setup a local python environment with the requirements outlined in [environment.yml](environment.yml)
+The intro notebooks below are not intended to be run on mybinder, because they require use of VTK, which interfaces with your graphics card to make 3d graphics. To run them you should setup a local python environment (see below).
 
 * [MeshExample](notebooks/intro/MeshExample.ipynb)
 This demonstrates some basic 3d visualization of a meshes and skeletons using vtk, as well as calculating shortest paths along a mesh.
@@ -23,7 +24,32 @@ This demonstrates some basic 3d visualization of a meshes and skeletons using vt
 This demonstrates two techinques to create 3d scale bars on 3d visualization plots.
 
 ### Multiscale manuscript analyses  
-These notebooks walk through some newer analyses. See each [directory](notebooks/multiscale) to see the types of analysis.
+These notebooks walk through some newer analyses studying the Phase I electron microscopy volume.  
+
+These include:
+* [Motif analysis](notebooks/multiscale/motifs) of a proofread synaptic connectivity graph between pyramidal cells.
+* [Functional analysis](notebooks/multiscale/function) of a subset of the same pyramidal cells based on two-photon calcium imaging. The analysis relates local connectivity to function.
+* [Mitochondria analysis](notebooks/multiscale/mitochondria) comparing mitochondria across neuronal compartments (axon, dendrite, soma), as well as a relation between mitochondrial density and synapse density.
+* [Resource statistics](notebooks/multiscale/resource_statistics) that summarize neurite branch length and the expected completeness of the dendritic arbors in the volume.
+
+See each [directory](notebooks/multiscale) and our [biorxiv manuscript](https://www.biorxiv.org/content/10.1101/2020.10.14.338681v3) for more details.
+
+
+# Local environment
+A local environment for running the intermediate code generation scripts can be installed using the Anaconda environment installed within the binder and the `postBuild` script
+```
+conda env create -f environment.yml
+bash postBuild
+```
+This installs the required python packages for running the basic code and the jupyter extensions for any plots and visualizations.
+
+If you'd like to use these notebooks as part of your general jupyter environment. You'll likely need to install this environment into your ipython kernels.
+```
+conda activate micronsbinder
+python -m ipykernel install --user --name=micronsbinder
+```
+You can then select this python environment when opening the relevant notebooks.
+
 
 # Related projects
 The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed
@@ -41,6 +67,7 @@ This is a python library developed principally by Will Silversmith from the Seun
 This is a package developed by Sven Dorkenwald (Princeton), Forrest Collman (Allen), and Casey Schneider-Mizell (Allen) to make downloading meshes (via [CloudVolume](https://www.github.com/seung-lab/cloud-volume)), performing analysis (with tools like [trimesh](https://github.com/mikedh/trimesh), and [scipy](https://www.scipy.org/)) and visualization (via [vtk](https://pypi.org/project/vtk/)) of neuronal meshes easier.  There are also some tools for helping make dynamic movies of these data.
 * [DashDataFrame](https://www.github.com/AllenInstitute/DashDataFrame)  
 This is a package developed by Leila Elabaddy, Melissa Hendershott, and Forrest Collman at the Allen Institute.  It simplifies constructing dynamic visualization from pandas dataframes using [Dash](https://www.github.com/plotly/dash), including making dynamic links out to external services.  In this case, we use this to make dynamic scatterplots that allow you to select variables to plot, select and filter data points, and construct neuroglancer views of the specific locations in the dataset of those data points.
+
 
 # Level of Support
 We are releasing this repository as-is, and plan to update it without a fixed schedule.

@@ -1,4 +1,17 @@
-# Structure-function analysis (Figure 6)
+# Structure-function analysis
+
+## Outline
+### scripts
+- `compute_neurite_length.py`: Compute axon/dendrite length using skeletons.
+- `compute_degree.py`: Compute out/in-degree from the connectivity graph.
+```python3
+python [script_name.py]
+```
+The results will be saved in the `data` folder.
+### notebooks
+- `structure_function_analysis.ipynb` (Figure 7): Analysis testing whether visual response (response strength, intermittency, OSi) is correlated with local connectivity. 
+- `orientation_direction_tuning.ipynb`: Compute tuning curves and determine significantly tuned cells with permutation test.
+- `spatial_organization.ipynb` (Figure S7): Spatial organization of in-connection density in the volume.
 
 ## DataJoint database
 This public database which contains extracted structural and functional data such as visual responses and connectivity data.  
@@ -9,6 +22,7 @@ This public database which contains extracted structural and functional data suc
 ### Registration
 You need to be registered to access the database.  
 Please fill out the [registration form](https://forms.gle/6SeDGRT8zoLqpbfU9) to receive user id and password.
+*Currently, it is temporarily available without registration.
 
 ### Installation
 DataJoint for Python requires Python 3.4 or above to function properly.
@@ -29,7 +43,7 @@ import datajoint as dj
 # Datajoint credentials
 dj.config["database.host"] = "datajoint.ninai.org"
 
-dj.conn() # Then it will ask for your net id and password
+dj.conn() # Then it will ask for your id and password
 
 pinky = dj.create_virtual_module("seung_pinky", "seung_pinky")
 ```
@@ -59,26 +73,3 @@ Please refer to the [DataJoint Tutorials](https://tutorials.datajoint.io/setting
 - Each file has length 27300 (time).
 - The value indicates the angle of the directional stimulus at that time frame.
 - If it's empty (NaN), it means that the noise stimulus is shown at that time frame.
-
-
-## Skeletons for pyramidal cells
-Skeletons for pyramidal cells can be downloaded from [here](https://drive.google.com/drive/folders/1_6jVwOx0YQE9all7cnf75xYmyWCYsiUk?usp=sharing).  
-`skeletons`: Skeleton files for pyramidal cells named by its cell id.  
-`labels`: Skeleton compartment labels (n_vertices x 1). Each value indicates which compartment each skeleton node belongs to.  
-> 0: Soma  
-> 1: Axon  
-> 2: Basal dendrite  
-> 3: Apical dendrite  
-> 4: Ambiguous dendrite  
-> 5: Ambiguous  
-
-#### How to load skeletons
-1. Install [MeshParty](https://meshparty.readthedocs.io/en/latest/includeme.html#meshparty)  
-2. Load skeletons using [skeleton_io](https://meshparty.readthedocs.io/en/latest/guide/skeletons.html)  
-```
-from meshparty import skeleton_io
-
-skeleton = skeleton_io.read_skeleton_h5("648518346349537297_skeleton.h5")
-```
-- `skeleton.vertices` : Coordinates of vertices [nm].  
-- `skeleton.csgraph` : Skeleton graph where each element refers to distance from node i to j [nm].
