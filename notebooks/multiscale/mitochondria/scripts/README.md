@@ -12,12 +12,12 @@ soma.
 This script computes a data frame with an ID, volume, and surface area
 measurement for each branch. The branch ID is the minimum skeleton node index
 that is contained within the branch. This can be parallelized by splitting over
-the processed (`pycids_v185.csv` below).
+the processed (`clean_and_complete_soma_ids_v185.csv` below).
 
 NOTE: this requires downloading the meshes (through downloadNeuronMeshes.sh)
 ```
 python scripts/computebasicbranchstats.py \
-    data/pycids_v185.csv \
+    data/clean_and_complete_soma_ids_v185.csv \
     data/basicbranchstats.csv
 ```
 
