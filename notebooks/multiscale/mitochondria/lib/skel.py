@@ -2,12 +2,12 @@
 Skeleton handling
 
 Label conventions:
-{1: 'axon',
- 2: 'basal dendrite',
- 3: 'apical dendrite',
- 4: 'ambiguous dendrite',
- 5: 'ambiguous',
- 0: 'soma'}
+{0: 'Somatic',
+ 1: 'Axonal',
+ 2: 'Basal dendrite',
+ 3: 'Apical dendrite',
+ 4: 'Unknown/Ambiguous dendrite',
+ 5: 'Unknown/Ambiguous'}
 """
 import os
 import json
@@ -19,52 +19,37 @@ from meshparty import skeleton_io
 from meshparty.skeleton import Skeleton
 from scipy.sparse import csgraph
 
-
-SKELDIR = "data/smoothed_skeletons_v185"
-SKEL_ASSOC_DIR = "../../mito-analysis/intermeds/mito_to_skel"
+from . import ngl
 
 
-def read_neuron_skel(segid, scale=False):
-    filename = f"{SKELDIR}/{segid}_skeleton.h5"
-
-    if os.path.exists(filename):
-        skel = skeleton_io.read_skeleton_h5(filename)
-    else:
-        raise Exception(f"{filename} not found. Have you set the SKELDIR?")
-
-    if scale:
-        skel.voxel_scaling = [0.895, 0.895, 1]
-
-    return skel
+SKELDIR = "../data/smoothed_skeletons_v185"
+SKEL_ASSOC_DIR = "data/mitotoskel"
 
 
-def read_smoothed_skel(segid):
+def read_neuron_skel(segid, scale=True):
     filename = f"{SKELDIR}/{segid}_skeleton.h5"
 
     return skeleton_io.read_skeleton_h5(filename)
 
 
 def read_neuron_complbls(segid):
-    smoothed_filename = f"{SKELDIR}/{segid}_skeleton_label.npy"
-
-    if os.path.exists(smoothed_filename):
-        return np.load(smoothed_filename)
-    else:
-        raise Exception(f"{filename} not found. Have you set the SKELDIR?")
-
-
-def read_smoothed_complbls(segid):
     filename = f"{SKELDIR}/{segid}_skeleton_label.npy"
 
-    return np.load(filename)
+    return np.load(smoothed_filename)
 
 
-def skel_length(segid):
-    return CVOL.skeleton.get(segid).cable_length()
+def read_skel_and_labels(segid, refine=False):
+    segskel = skel.read_neuron_skel(segid)
+    complbl = skel.read_neuron_complbls(segid)
+
+    if refine:
+        complbl = compartment.refine_labels(segskel, complbl)
+
+    return segskel, complbl
 
 
-def read_skel_assoc(segid):
-    filename = f"{SKEL_ASSOC_DIR}/assoc_{segid}.h5"
+def read_skel_assoc(segid, include_counts=False):
+    filename = f"{SKEL_ASSOC_DIR}/assoc__{segid}.h5"
     with h5py.File(filename, "r") as f:
         data = f[f"{segid}/data"][()]
         mitoids = f[f"{segid}/mitoids"][()]
@@ -73,7 +58,10 @@ def read_skel_assoc(segid):
     assocs = dict()
     for (i, v) in enumerate(mitoids):
         rng = ptrs[i, :]
-        assocs[v] = data[rng[0]:rng[1]]
+        if include_counts:
+            assocs[v] = data[rng[0]:rng[1]]
+        else:
+            assocs[v] = list(map(tuple, data[rng[0]:rng[1]]))
 
     return assocs
 
@@ -108,34 +96,42 @@ def full_cover_paths(segskel):
     return [segskel.path_to_root(ep) for ep in segskel.end_points]
 
 
-def remove_dups(segskel):
-    weights = edge_weights(segskel)
-
-    to_merge = np.max(segskel.edges[weights == 0], axis=1)
-    targets = np.min(segskel.edges[weights == 0], axis=1)
-
-    vertexmask = np.ones((len(segskel.vertices),), dtype=np.uint8)
-    vertexmask[to_merge] = 0
-    vertexinds = np.flatnonzero(vertexmask)
-
-    newverts = segskel.vertices[vertexinds]
-    newvertprops = {k: np.array(v)[vertexinds] for (k, v)
-                    in segskel.vertex_properties.items()}
-
-    remapping = np.zeros((len(segskel.vertices),), dtype=np.uint32)
-    remapping[vertexinds] = np.arange(len(newverts))
-    remapping[to_merge] = remapping[targets]
-
-    newedges = remapping[segskel.edges[weights != 0]]
-    newm2s = remapping[segskel.mesh_to_skel_map]
-
-    return Skeleton(vertices=newverts, edges=newedges,
-                    mesh_to_skel_map=newm2s,
-                    vertex_properties=newvertprops,
-                    root=remapping[segskel.root])
-
-
 def edge_weights(segskel):
     xs = segskel.vertices[segskel.edges[:, 0]]
     ys = segskel.vertices[segskel.edges[:, 1]]
     return np.linalg.norm(xs - ys, axis=1)
+
+
+def branches(skel, compartmentlabels, somadists=None):
+    """Splitting a skeleton into branches
+
+    Each branch is defined as the connected components
+    of the skeleton with the same compartment label.
+    """
+    branchids = np.empty((len(skel.vertices),), dtype=np.int)
+    branchlbl = dict()
+
+    lbls = np.unique(compartmentlabels)
+    for lbl in lbls:
+        compartmentids = np.flatnonzero(compartmentlabels == lbl)
+        ncs, cs = graphcomponents(skel.csgraph, compartmentids)
+
+        for i in range(ncs):
+            component = compartmentids[cs == i]
+
+            if somadists is None:
+                branchid = min(component)
+            else:
+                branchid = component[np.argmin(somadists[component])]
+
+            branchids[component] = branchid
+            branchlbl[branchid] = lbl
+
+    return branchids, branchlbl
+
+
+def graph_components(graph, subgraph_inds=None):
+    if subgraph_inds is not None:
+        graph = graph[subgraph_inds, :][:, subgraph_inds]
+
+    return csgraph.connected_components(graph, directed=False)    

@@ -79,16 +79,12 @@ def read_lookup(filename, sep=';'):
     return lookup
 
 
-def read_ids(filename):
-    ids = list()
+def readids(filename):
     with open(filename) as f:
-        for l in f:
-            ids.append(int(l))
-
-    return ids
+        return list(map(int, f))
 
 
-def write_ids(ids, filename):
+def writeids(ids, filename):
     with open(filename, "w+") as f:
         for i in ids:
             f.write(f"{i}\n")
