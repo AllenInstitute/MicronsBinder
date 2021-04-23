@@ -29,10 +29,8 @@ def get_Euclidean_dist(p0,p1):
 
 def get_process_path_lengths(segid,centroid,is_pyr=False):
     
-    # With smoothed skeletons you should be able to access
-    # both pyramidal and inhibitory data in the same way
-    skelcurr = skel.read_smoothed_neuron_skel(segid)
-    skelbls = skel.read_smoothed_neuron_complbls(segid)
+    skelcurr = skel.read_neuron_skel(segid)
+    skelbls = skel.read_neuron_complbls(segid)
 
     verts = skelcurr.vertices
     edges = skelcurr.edges
@@ -172,7 +170,7 @@ if __name__ == "__main__":
     end_time = time.time()
 
     pyrs_w_neurites = pyrs.join(pyr_neurite_info)
-    pyrs_w_neurites.to_csv('data/pyr_neurite_lengths.csv',index=True)
+    pyrs_w_neurites.to_csv('data/pyr_dist_to_leaves.csv',index=True)
 
     print('Time for excitatory neurons: {0:.02} seconds.'.format(end_time - start_time))
 
@@ -189,6 +187,6 @@ if __name__ == "__main__":
     end_time_2 = time.time()
 
     inhs_w_neurites = inhs.join(inh_neurite_info)
-    inhs_w_neurites.to_csv('data/inh_neurite_lengths.csv',index=True)
+    inhs_w_neurites.to_csv('data/inh_dist_to_leaves.csv',index=True)
 
     print('Time for inhibitory neurons: {0:.02} seconds.'.format(end_time_2 - start_time_2))
