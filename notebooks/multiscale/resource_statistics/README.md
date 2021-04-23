@@ -1,4 +1,4 @@
-# Resource statistics computation
+# Resource statistics
 ![Dendrite lengths](assets/dendritelength.png)
 
 Here we quantify the branch length of each reconstructed cell in the volume with clean compartment labels,
