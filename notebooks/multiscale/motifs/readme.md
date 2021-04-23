@@ -31,7 +31,7 @@ Each notebook demonstrates the data processing procedure for each independent an
 - `data/synapses.csv`  A dataframe that contains pre- and post-synaptic cell ids.
 
 ### Intermediate Data
-For the following files, `subgraph` can take values `{'full', 'th0', 'th100', 'th300'}`, and `model` can take values from `{'cfg', 'gcfg', , 'ger', 'pm'}`.
+For the following files, `subgraph` can take values `{'full', 'th0', 'th100', 'th300'}`, and `model` can take values from `{'cfg', 'gcfg', 'ger', 'pm'}`.
 - `saved/{subgraph}_2motif_{model}{sample_size}.csv` Dataframe that describes sampled 2-cell motifs.
 - `saved/{subgraph}_3motif_{model}{sample_size}.csv` Dataframe that describes sampled 3-cell motifs.
 - `saved/{subgraph}_cnr_{model}{sample_size}.csv` Dataframe that describes sampled common neighbor statistics.
