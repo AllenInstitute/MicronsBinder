@@ -11,11 +11,11 @@ from lib import string2list as s2l
 
 
 # Define volume properties
-xres = yres = 4 # in nm/px
+xres = yres = 3.58 # in nm/px
 zres = 40
 
 
-# Get all pyramidal, interneuron, and glial segment IDs
+# Get all pyramidal and interneuron segment IDs
 # These are the IDs from the soma subgraph and the consensus inhibitory cell table
 pyrs = pd.read_csv('data/soma_IDs/p100_pyr_soma_IDs_v185.csv',index_col=0)
 inhs = pd.read_csv('data/soma_IDs/p100_inh_soma_IDs_v185.csv',index_col=0)
@@ -33,8 +33,7 @@ def get_process_path_lengths(segid,centroid,is_pyr=False):
     # both pyramidal and inhibitory data in the same way
     skelcurr = skel.read_smoothed_neuron_skel(segid)
     skelbls = skel.read_smoothed_neuron_complbls(segid)
-    
-        
+
     verts = skelcurr.vertices
     edges = skelcurr.edges
 
@@ -45,16 +44,13 @@ def get_process_path_lengths(segid,centroid,is_pyr=False):
     # So we classify all nodes directly from their labels.
     # classify remaining nodes as axons or dendrites
     
-    nodes = [q for q in range(len(skelbls))]
-    somanodes = [q for q in nodes if skelbls[q] == 0]
-    axnodes = [q for q in nodes if skelbls[q] == 1]
-    dendnodes = [q for q in nodes if skelbls[q] in [2,3,4]]
+    nodes = np.arange(len(skelbls))
+    somanodes = np.flatnonzero(skelbls == 0)
+    axnodes = np.flatnonzero(skelbls == 1)
+    dendnodes = np.flatnonzero(np.isin(skelbls, [2, 3, 4]))
     
     if centroid == None:
-        centroid_x = np.mean([verts[q][0] for q in somanodes])
-        centroid_y = np.mean([verts[q][1] for q in somanodes])
-        centroid_z = np.mean([verts[q][2] for q in somanodes])
-        centroid = [centroid_x,centroid_y,centroid_z]
+        centroid = np.mean(verts[somanodes], axis=0)
         
     dists_centroid = [get_Euclidean_dist(verts[q],centroid) for q in nodes]
     somaroot = nodes[np.argmin(dists_centroid)]
@@ -64,16 +60,9 @@ def get_process_path_lengths(segid,centroid,is_pyr=False):
     axedges = []
     dendedges = []
     
-    for e in edges:
-        # explicitly remove any edges connecting nodes outside the soma threshold radius
-        # to nodes inside the radius
-        isinax = [q for q in e if q in axnodes]
-        isindend = [q for q in e if q in dendnodes]
-        if len(isinax) > 0:
-            axedges.append(e)
-        if len(isindend) > 0:
-            dendedges.append(e)
-            
+    axedges = edges[(skelbls[edges] == 1).max(1)]
+    dendedges = edges[(np.isin(skelbls[edges], [2, 3, 4])).max(1)]
+
     # print('number of edges',len(axedges),len(dendedges))
 
     # Make separate axonal and dendritic graphs
@@ -177,13 +166,13 @@ if __name__ == "__main__":
         centroid = [centroidraw[0]*xres, centroidraw[1]*yres, centroidraw[2]*zres] # convert to nm
         neuritelengths = get_process_path_lengths(rtid,centroid,is_pyr=True)
         pyr_neurite_info.at[idx,'axon_lengths_um'] = neuritelengths[0]
-        pyr_neurite_info.at[idx,'basal_dend_lengths_um'] = neuritelengths[1]
-        pyr_neurite_info.at[idx,'apical_dend_lengths_um'] = neuritelengths[2]
-        pyr_neurite_info.at[idx,'ambiguous_dend_lengths_um'] = neuritelengths[3]
+        pyr_neurite_info.at[idx,'basal_dend_lengths_um'] = neuritelengths[2]
+        pyr_neurite_info.at[idx,'apical_dend_lengths_um'] = neuritelengths[3]
+        pyr_neurite_info.at[idx,'ambiguous_dend_lengths_um'] = neuritelengths[4]
     end_time = time.time()
 
     pyrs_w_neurites = pyrs.join(pyr_neurite_info)
-    pyrs_w_neurites.to_csv('data/pyr_neurite_lengths.csv',index=True)
+    pyrs_w_neurites.to_csv('data/_pyr_neurite_lengths.csv',index=True)
 
     print('Time for excitatory neurons: {0:.02} seconds.'.format(end_time - start_time))
 
@@ -200,6 +189,6 @@ if __name__ == "__main__":
     end_time_2 = time.time()
 
     inhs_w_neurites = inhs.join(inh_neurite_info)
-    inhs_w_neurites.to_csv('data/inh_neurite_lengths.csv',index=True)
+    inhs_w_neurites.to_csv('data/_inh_neurite_lengths.csv',index=True)
 
     print('Time for inhibitory neurons: {0:.02} seconds.'.format(end_time_2 - start_time_2))
