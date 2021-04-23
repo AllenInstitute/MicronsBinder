@@ -32,7 +32,7 @@ Each notebook demonstrates the data processing procedure for each independent an
 
 ### Intermediate Data
 For the following files, `subgraph` can take values `{'full', 'th0', 'th100', 'th300'}`, and `model` can take values from `{'cfg', 'gcfg', , 'ger', 'pm'}`.
-- `saved/{subgraph}_2motif_{model}{sample_size}.csv` Dataframe that describes sampled 2-cell motifs, where `subgraph` can take `{'full', 'th0', 'th100', 'th300'}`.
+- `saved/{subgraph}_2motif_{model}{sample_size}.csv` Dataframe that describes sampled 2-cell motifs.
 - `saved/{subgraph}_3motif_{model}{sample_size}.csv` Dataframe that describes sampled 3-cell motifs.
 - `saved/{subgraph}_cnr_{model}{sample_size}.csv` Dataframe that describes sampled common neighbor statistics.
 - `saved/{subgraph}_cnrstd_{model}{sample_size}.csv` Dataframe that describes sampled common neighbor statistics (auxillary).
