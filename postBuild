@@ -57,6 +57,6 @@ cd $home
 resourcedir="notebooks/multiscale/resource_statistics/data"
 mkdir -p ${resourcedir}
 cd ${resourcedir} \
-&& gdown --id 1Roj4WFBofLsRQVY8FHTE_0fq9EJPKGRt -O multiscale_resource_intermediate_data.tgz \
+&& gdown --id 1pRgKWl4vo5QNHp3aIaaRVFt_QqwZ_KhC -O multiscale_resource_intermediate_data.tgz \
 && tar -xzf multiscale_resource_intermediate_data.tgz
 cd $home
