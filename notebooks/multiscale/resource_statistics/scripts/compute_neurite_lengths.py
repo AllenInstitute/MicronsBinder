@@ -172,7 +172,7 @@ if __name__ == "__main__":
     end_time = time.time()
 
     pyrs_w_neurites = pyrs.join(pyr_neurite_info)
-    pyrs_w_neurites.to_csv('data/_pyr_neurite_lengths.csv',index=True)
+    pyrs_w_neurites.to_csv('data/pyr_neurite_lengths.csv',index=True)
 
     print('Time for excitatory neurons: {0:.02} seconds.'.format(end_time - start_time))
 
@@ -189,6 +189,6 @@ if __name__ == "__main__":
     end_time_2 = time.time()
 
     inhs_w_neurites = inhs.join(inh_neurite_info)
-    inhs_w_neurites.to_csv('data/_inh_neurite_lengths.csv',index=True)
+    inhs_w_neurites.to_csv('data/inh_neurite_lengths.csv',index=True)
 
     print('Time for inhibitory neurons: {0:.02} seconds.'.format(end_time_2 - start_time_2))
