@@ -16,9 +16,9 @@ the processed (`clean_and_complete_soma_ids_v185.csv` below).
 
 NOTE: this requires downloading the meshes (through downloadNeuronMeshes.sh)
 ```
-python scripts/computebasicbranchstats.py \
-    data/clean_and_complete_soma_ids_v185.csv \
-    data/basicbranchstats.csv
+$ python scripts/computebasicbranchstats.py \
+      data/clean_and_complete_soma_ids_v185.csv \
+      data/basicbranchstats.csv
 ```
 
 
@@ -32,12 +32,12 @@ This can be parallelized by splitting the mitochondria dataframe
 
 NOTE: this requires downloading the mitochondria meshes (through downloadmitomeshes.py)
 ```
-python scripts/mitotoskel.py \
-    data/pni_mito_cellswskel_v185.csv \
-    data/temp/assoc_
-python scripts/assemblemitotoskel.py \
-    data/pni_mito_cellswskel_v185.csv \
-    data/pycids_v185.csv data/mitotoskel.h5
+$ python scripts/mitotoskel.py \
+      data/pni_mito_cellswskel_v185.csv \
+      data/temp/assoc_
+$ python scripts/assemblemitotoskel.py \
+      data/pni_mito_cellswskel_v185.csv \
+      data/pycids_v185.csv data/mitotoskel.h5
 ```
 
 
@@ -49,10 +49,10 @@ mitochondria dataframe (`pni_mito_cellswskel_v185.csv`) naively.
 
 NOTE: this requires downloading the mitochondria meshes (through downloadmitomeshes.py)
 ```
-python scripts/computeextramitostats.py \
-    data/pni_mito_cellswskel_v185.csv \
-    data/mitotoskel.h5 \
-    data/pni_mito_cellswskel_v185_fullstats.csv
+$ python scripts/computeextramitostats.py \
+      data/pni_mito_cellswskel_v185.csv \
+      data/mitotoskel.h5 \
+      data/pni_mito_cellswskel_v185_fullstats.csv
 ```
 
 
@@ -63,15 +63,16 @@ compute synapse and mitochondrial density metrics, and write out
 two dataframes as a result - one describing a branch per row, and
 another describing a cell per row, where each branch of a compartment
 is summed within each cell. This can be parallelized by splitting over
-cells (`pycids_v185.csv`).
+cells (`clean_and_complete_soma_ids_v185.csv` below).
 ```
-python scripts/computedensitystats.py \
-    data/pni_mito_cellswskel_v185_fullstats.csv \
-    data/pycids_v185.csv data/neuron_received_synapses_v185.csv \
-    data/basicbranchstats.csv \
-    data/pni_mito_cell_overlaps_v185.csv \
-    data/pni_nucleus_segments.csv \
-    data/clean_and_complete_nucleus_lookup.csv \
-    data/fullbranchstats.csv \
-    data/cellwisestats.csv
+$ python scripts/computedensitystats.py \
+      data/pni_mito_cellswskel_v185_fullstats.csv \
+      data/clean_and_complete_soma_ids_v185.csv \
+      data/neuron_received_synapses_v185.csv \
+      data/basicbranchstats.csv \
+      data/pni_mito_cell_overlaps_v185.csv \
+      data/pni_nucleus_segments.csv \
+      data/clean_and_complete_nucleus_lookup.csv \
+      data/fullbranchstats.csv \
+      data/cellwisestats.csv
 ```
