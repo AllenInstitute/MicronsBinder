@@ -46,9 +46,10 @@ cd ${mitodir} \
 cd $home
 
 # multiscale/motifs
-motifdir="notebooks/multiscale/motifs/data"
-mkdir -p ${motifdir}
+motifdir="notebooks/multiscale/motifs/"
 cd ${motifdir} \
+&& gdown --id 1l4XomQr7-T09VBYQasuTir66BnO9S7nw -O multiscale_motif_base_data.tgz \
+&& tar -xzf multiscale_motif_base_data.tgz \
 && gdown --id 1SIRrG8KuobgjuByBHxRt11qkM_Fj7JSN -O multiscale_motif_intermediate_data.tgz \
 && tar -xzf multiscale_motif_intermediate_data.tgz
 cd $home
