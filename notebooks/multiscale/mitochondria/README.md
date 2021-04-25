@@ -5,12 +5,12 @@ Regulation of mitochondrion size in neurons affects synaptic plasticity ([Divaka
 
 ### Interactive Notebooks
 
-* `visualize.ipynb`
-  A brief notebook that demonstrates a way to view a neuron rendered with its mitochondria.
 * `compartment_comparison.ipynb` 
   An analysis notebook comparing mitochondria across neuronal compartments (Figure 5C)
 * `density_analysis.ipynb`
   An analysis notebook relating mitochondrial volume density against synapse surface density (Figure 5D & 5E)
+* `visualize.ipynb` (COMING SOON)
+  A brief notebook that demonstrates a way to view a neuron rendered with its mitochondria.
 
 
 ### Base data
