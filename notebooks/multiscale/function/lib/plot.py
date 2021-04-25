@@ -4,7 +4,7 @@ For plotting.
 import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr	
 
 from lib.calcium import get_section
 
@@ -103,3 +103,41 @@ def plot_spatial_ax(ax, xval, yval, nbins=5, xlab="", ylab="In-conn. density ($\
   ax.set_xlabel(xlab, fontsize=20, fontname="Helvetica")
   ax.set_ylabel(ylab, fontsize=20, fontname="Helvetica")
   ax.set_yticks(np.arange(0,0.009,0.002))
+
+
+def plot_trial(trace, condition, angle, ax, xlim=[], ylim=[]):
+    
+  section_list = get_section(condition, angle)
+  if np.isnan(angle):
+    section_list = section_list[:-1]
+  
+  for s in section_list:
+    n = s[1] - s[0]
+    if n>=45:
+      n = 45
+      x = np.arange(0,n*0.0674-0.001,0.0674)
+      y = trace[s[0]:s[0]+45]
+      ax.plot(x, y, '-', linewidth=0.3)
+    else:
+      x = np.arange(0,n*0.0674-0.001,0.0674)
+      y = trace[s[0]:s[1]]
+      ax.plot(x, y, '-', linewidth=0.3)
+  
+  if xlim==[]:
+  	xlim = [x.min(), x.max()*1.1]
+  if ylim==[]:
+  	ylim = [trace.min(), trace.max()*1.1]
+
+  ax.set_xlim(xlim[0], xlim[1])
+  ax.set_ylim(ylim[0], ylim[1])
+
+
+def plot_tuning_curve(tune_curve, ax, ylim=[0,1]):
+
+	directions = np.arange(0,360,22.5)
+
+	ax.plot(directions, tune_curve, "-o")
+	ax.set_ylim([0,1])
+	ax.set_xticks(np.arange(0,360,45))
+	ax.set_xlabel("Directions (deg)", fontsize=12)
+	ax.set_ylabel("Normalized response", fontsize=12)
