@@ -17,8 +17,9 @@ zres = 40
 
 # Get all pyramidal and interneuron segment IDs
 # These are the IDs from the soma subgraph and the consensus inhibitory cell table
-pyrs = pd.read_csv('data/soma_IDs/p100_pyr_soma_IDs_v185.csv',index_col=0)
-inhs = pd.read_csv('data/soma_IDs/p100_inh_soma_IDs_v185.csv',index_col=0)
+pyrs = pd.read_csv('data/soma_ids/p100_pyr_soma_IDs_v185.csv',index_col=0)
+inhs = pd.read_csv('data/soma_ids/p100_inh_soma_IDs_v185.csv',index_col=0)
+inh_subtypes = pd.read_csv('data/inh_subtypes.csv', index_col=0)
 
 
 def get_Euclidean_dist(p0,p1):
@@ -82,11 +83,13 @@ def get_process_path_lengths(segid,centroid,is_pyr=False):
     dendgraph.add_weighted_edges_from(dend_weighted_edges)
     
     # Break the axonal and dendritic graphs into connected subgraph components
-    asgs = list(nx.connected_component_subgraphs(axgraph))
-    dsgs = list(nx.connected_component_subgraphs(dendgraph))
-    
+    asgs = list(axgraph.subgraph(c)
+                for c in nx.connected_components(axgraph))
+    dsgs = list(dendgraph.subgraph(c)
+                for c in nx.connected_components(dendgraph))
 
-    
+
+
     # Define containers for axon and dendritic path lengths
     axdists = []
     denddists = []
@@ -187,6 +190,8 @@ if __name__ == "__main__":
     end_time_2 = time.time()
 
     inhs_w_neurites = inhs.join(inh_neurite_info)
+    inhs_w_neurites = pd.merge(inhs_w_neurites, inh_subtypes,
+                               left_on="pt_root_id", right_on="pt_root_id")
     inhs_w_neurites.to_csv('data/inh_dist_to_leaves.csv',index=True)
 
     print('Time for inhibitory neurons: {0:.02} seconds.'.format(end_time_2 - start_time_2))
