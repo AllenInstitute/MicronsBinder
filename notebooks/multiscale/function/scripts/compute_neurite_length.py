@@ -3,15 +3,14 @@ Compute axon/dendrite length [um] using skeletons.
 """
 import numpy as np
 import pandas as pd
-
+import pickle
 from meshparty import skeleton_io
 
 
 def main():
 
-	id_fname = "../data/pyc_id_list.csv"
-	id_df = pd.read_csv(id_fname)
-	seg_id_list = np.array(id_df["segment_id"])
+	Neuron = load_dict("../data/Neuron.pkl")
+	seg_id_list = Neuron["segment_id"]
 	n = seg_id_list.shape[0]
 
 	dendrite_length = np.zeros(n)
@@ -36,7 +35,7 @@ def load_skeleton(seg_id):
 	"""
 	Load skeleton.
 	"""
-	path_skel = "../data/smoothed_skeletons_v185/"
+	path_skel = "../../data/smoothed_skeletons_v185/"
 
 	skel_lab = np.load(path_skel+str(seg_id)+"_skeleton_label.npy")
 	seg_skel = skeleton_io.read_skeleton_h5(path_skel+str(seg_id)+"_skeleton.h5")
@@ -67,12 +66,20 @@ def write_data(seg_ids, dendrite_length, axon_length):
 	Save axon/dendrite length data.
 	"""
 
-	df = pd.DataFrame(data={"seg_id": seg_ids,
+	df = pd.DataFrame(data={"segment_id": seg_ids,
 													"axon_len": axon_length,
 													"dendrite_len": dendrite_length})
-	output_fname = "../data/neurite_length.csv"
+	output_fname = "../data/Neurite.csv"
 	df.to_csv(output_fname, index=False)
 	print("Results saved in {}".format(output_fname))
+
+
+def load_dict(fname):
+
+  with open(fname, 'rb') as handle:
+    data = pickle.load(handle)
+
+  return data
 
 
 if __name__ == "__main__":
