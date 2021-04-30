@@ -42,3 +42,11 @@ def get_scan(database, seg_id):
 	scan_id = (database.EASETuning() & {"segment_id": seg_id}).fetch1("scan_id")
 
 	return scan_id
+
+
+# Get synapse/connection density
+def get_density(database, seg_id, dens_type="inconn_dens"):
+
+	density = (database.SynDensity() & {"segment_id": seg_id}).fetch1(dens_type)
+
+	return density
