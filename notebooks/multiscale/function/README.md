@@ -76,13 +76,13 @@ trace = (pinky.EASETrace() & key).fetch1("trace")
 ![](figures/function_info_fig.png)
 
 ### 2-photon structural stack
-- Structural stack can be downloaded from [here](https://drive.google.com/file/d/1oS6lJbzk1pn6vjS5Jz2Q0tXNPbcfRIMy/view?usp=sharing)
-- The file contains an array of 512 (h) x 512 (w) x 310 (depth)
+- Structural stack can be downloaded from [here](https://drive.google.com/file/d/1oS6lJbzk1pn6vjS5Jz2Q0tXNPbcfRIMy/view?usp=sharing).
+- The file contains an array of 512 (h) x 512 (w) x 310 (depth).
 - Voxel dimension is about 0.8 µm x 0.8 µm x 1 µm.
 - The depth of the first section in the stack is assumed as z=0 µm.
 
 ### Calcium video
-- Calcium videos can be downloaded from [here](https://drive.google.com/drive/folders/1nL0_asZkqiWrgkE-tpXIswf84tEdBwq_?usp=sharing)
+- Calcium videos can be downloaded from [here](https://drive.google.com/drive/folders/1nL0_asZkqiWrgkE-tpXIswf84tEdBwq_?usp=sharing).
 - Each file is a recording of a single slice.
 - Each file is an array of 256 (h) x 256 (w) x 27300 (time).
 - Pixel dimension is about 1.6 µm x 1.6 µm.
@@ -100,7 +100,7 @@ trace = (pinky.EASETrace() & key).fetch1("trace")
 #### Stimulus labels
 - Each csv file contains labels of stimulus at each time frame.
 - Each csv file has 27300 values.
-- The value indicates the angle of the directional stimulus at that time frame 
+- The value indicates the angle of the directional stimulus at that time frame. 
 - If it’s empty (NaN), it indicates the noise stimulus (except for first 200 frames).
 - First 200 frames are black screen stimulus for every scan.
 - Frame rate is 14.8313 frames per second.
