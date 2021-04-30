@@ -90,7 +90,7 @@ trace = (pinky.EASETrace() & key).fetch1("trace")
 - Relative location of the slices (reference to the first section of structural stack).  
 
 ### Visual stimulus
-- Stimulus videos and the labels can be downloaded from [here](https://drive.google.com/drive/folders/1-hLrXYclGwQmCX0VhjyrqJ8rpLsDSLgK?usp=sharing)
+- Stimulus videos and the labels can be downloaded from [here](https://drive.google.com/drive/folders/1-hLrXYclGwQmCX0VhjyrqJ8rpLsDSLgK?usp=sharing).
 #### Stimulus video
 - There exists one stimulus per scan.
 - Each tiff file is the stimulus video shown for a particular scan.
