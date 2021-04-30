@@ -27,7 +27,7 @@ def main(mito_filename, id_filename,
 
     mitodf = pd.read_csv(mito_filename, index_col=0)
 
-    segids = u.read_ids(id_filename)
+    segids = u.readids(id_filename)
 
     multiargs = make_batches(segids, mitodf, output_prefix, parallel)
 
@@ -82,7 +82,7 @@ def find_assoc_mitos(segid, mitoids, parallel=1):
 
     mito_to_nodes = dict()
     for mitoid in mitoids:
-        mitomesh = mesh.read_mesh_id(mitoid)
+        mitomesh = mesh.read_mito_mesh(mitoid)
         add_associations(skel_kdt, mitomesh, mitoid, mito_to_nodes)
 
     print(f"Processing seg {segid} finished in {time.time() - start}s")
@@ -91,7 +91,7 @@ def find_assoc_mitos(segid, mitoids, parallel=1):
 
 
 def read_skel_kdtree(segid):
-    segskel = skel.read_smoothed_skel(segid)
+    segskel = skel.read_neuron_skel(segid)
 
     return KDTree(segskel.vertices)
 

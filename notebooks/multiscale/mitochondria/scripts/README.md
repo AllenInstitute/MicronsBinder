@@ -30,7 +30,7 @@ This can be parallelized by splitting the mitochondria dataframe
 (`pni_mito_cellswskel_v185.csv`) by cell or naively splititng the rows.
 
 
-NOTE: this requires downloading the mitochondria meshes (through downloadmitomeshes.py)
+NOTE: this requires downloading the mitochondria meshes but these are not available yet
 ```
 $ python scripts/mitotoskel.py \
       data/pni_mito_cellswskel_v185.csv \
