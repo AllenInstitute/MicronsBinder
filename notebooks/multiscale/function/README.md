@@ -55,7 +55,6 @@ import datajoint as dj
 
 # Datajoint credentials
 dj.config["database.host"] = "datajoint.ninai.org"
-
 dj.conn() # Then it will ask for your id and password
 
 pinky = dj.create_virtual_module("seung_pinky", "seung_pinky")
