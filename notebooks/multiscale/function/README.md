@@ -104,3 +104,9 @@ trace = (pinky.EASETrace() & key).fetch1("trace")
 - If it’s empty (NaN), it indicates the noise stimulus (except for first 200 frames).
 - First 200 frames are black screen stimulus for every scan.
 - Frame rate is 14.8313 frames per second.
+
+### Coregistration
+- Coregistration information can be found [here](https://drive.google.com/drive/folders/1OOX3F-WazPngwvcoCBBBPcFj-hCHsSLd?usp=sharing).
+- Three different images need to be coregistered: EM, 2p structural stack, and 2p video.
+- 2p structural image is used as the reference. EM and 2p video are coregistered to 2p structural image.
+- Refer to the [Colab notebook](https://colab.research.google.com/drive/1LrAu38-K_ZjOKSZkDLmlfTOjR38stV47?usp=sharing) in the folder to find the transformation.
