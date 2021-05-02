@@ -4,7 +4,7 @@ Previous studies employing synaptic physiology in cortical brain slices reported
 
 ### Interactive Notebooks
 
-Each notebook demonstrates the data processing procedure for each independent analysis. Intermediate results are stored in `saved` folder for time-consuming steps (>30s). The prefix `th{x}-` indicates neurons with axon lengths less than x μm are excluded in the network analysis to alleviate the truncation effect. 
+Each notebook demonstrates the data processing procedure for each independent analysis. Intermediate results are stored in `saved` folder for time-consuming steps (>60s). The prefix `th{x}-` indicates neurons with axon lengths less than x μm are excluded in the network analysis to alleviate the truncation effect. 
 
 -  Locations of a subset of PyCs with axon lengths; in-/out-degree distributions compared with ER:
 	- `th100-degree-dist.ipynb` (Figure 5 D; Figure S5 B)

@@ -37,7 +37,7 @@ $ python scripts/mitotoskel.py \
       data/temp/assoc_
 $ python scripts/assemblemitotoskel.py \
       data/pni_mito_cellswskel_v185.csv \
-      data/pycids_v185.csv data/mitotoskel.h5
+      data/pycids_v185.csv data/mito_to_skel_v185.h5
 ```
 
 
