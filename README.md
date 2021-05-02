@@ -19,7 +19,7 @@ This notebook shows you how to create figures with overlaid EM and segmentation 
 The introductory notebooks below are not intended to be run on mybinder for reasons specified below. To run them you should set up a local python environment (see [these instructions](#localenv)).
 
 * [MeshExample](notebooks/intro/MeshExample.ipynb)
-This demonstrates basic 3D visualization of meshes and skeletons using vtk, as well as calculating shortest paths along a mesh. This example uses more memory than allocated to most binder instances, and may be killed during processing using those resources.
+This demonstrates basic 3D visualization of meshes and skeletons using vtk, as well as calculating shortest paths along a mesh. This example uses more memory than allocated to most binder instances, and may be killed during processing while using those resources.
 * [Render3DScaleBar](notebooks/intro/Render3DScaleBar.ipynb)
 This demonstrates two techinques to create 3D scale bars on 3D visualization plots. It requires access to an X windows system to view these plots.
 
