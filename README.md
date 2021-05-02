@@ -16,12 +16,12 @@ This notebook shows you how to create dynamic scatterplots that recreate some of
 * [ImageAndSegmentationDownload](notebooks/ImageAndSegmentationDownload.ipynb)  
 This notebook shows you how to create figures with overlaid EM and segmentation figures.
 
-The intro notebooks below are not intended to be run on mybinder, because they require use of VTK, which interfaces with your graphics card to make 3d graphics. To run them you should setup a local python environment (see below).
+The introductory notebooks below are not intended to be run on mybinder for reasons specified below. To run them you should set up a local python environment (see [these instructions](#localenv)).
 
 * [MeshExample](notebooks/intro/MeshExample.ipynb)
-This demonstrates some basic 3d visualization of a meshes and skeletons using vtk, as well as calculating shortest paths along a mesh.
-* [Render3dScaleBar](notebooks/intro/Render3dScaleBar.ipynb)
-This demonstrates two techinques to create 3d scale bars on 3d visualization plots.
+This demonstrates basic 3D visualization of meshes and skeletons using vtk, as well as calculating shortest paths along a mesh. This example uses more memory than allocated to most binder instances, and may be killed during processing using those resources.
+* [Render3DScaleBar](notebooks/intro/Render3DScaleBar.ipynb)
+This demonstrates two techinques to create 3D scale bars on 3D visualization plots. It requires access to an X windows system to view these plots.
 
 ### Multiscale manuscript analyses  
 These notebooks walk through some newer analyses studying the Phase I electron microscopy volume.  
@@ -35,7 +35,7 @@ These include:
 See each [directory](notebooks/multiscale) and our [biorxiv manuscript](https://www.biorxiv.org/content/10.1101/2020.10.14.338681v3) for more details.
 
 
-# Local environment
+# <a name="localenv"></a> Local environment
 A local environment for running the intermediate code generation scripts can be installed using the Anaconda environment installed within the binder and the `postBuild` script
 ```
 conda env create -f environment.yml
