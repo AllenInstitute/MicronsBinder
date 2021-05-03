@@ -20,8 +20,6 @@ The results will be saved in the `data` folder as `csv` format.
 - `Stimulus.pkl`: Stimulus labels for all scans.
 - `Neuron.pkl`: List of segment ids of pyramidal cells.
 - `Soma.pkl`: Soma locations of pyramidal cells.
-- `Neurite.pkl`: Neurite lengths of pyramidal cells.
-- `SynDegree.pkl`: In/out-synapse/connection degree of pyramidal cells.
 - `SynDensity.pkl`: In/out-synapse/connection density of pyramidal cells.
 - `EASETrace.pkl`: Calcium traces of pyramidal cells.
 - `EASETuning.pkl`: Tuning cruves and tuning curve properties of pyramidal cells.
