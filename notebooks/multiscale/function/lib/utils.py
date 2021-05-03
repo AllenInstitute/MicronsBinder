@@ -6,7 +6,7 @@ import pickle
 def save_dict(fname, data_dict):
 
   with open(fname, 'wb') as handle:
-    pickle.dump(data_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    pickle.dump(data_dict, handle, protocol=4)
 
 
 def load_dict(fname):
