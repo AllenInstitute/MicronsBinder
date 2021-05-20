@@ -1,0 +1,17 @@
+{
+	"database.host": "datajoint.ninai.org",
+	"database.password": "seung_guest#1",
+	"database.user": "seung_guest",
+	"database.port": 3306,
+	"database.reconnect": true,
+	"connection.init_function": null,
+	"connection.charset": "",
+	"loglevel": "INFO",
+	"safemode": true,
+	"fetch_format": "array",
+	"display.limit": 50,
+	"display.width": 25,
+	"display.show_tuple_count": true,
+	"history": [
+]
+}

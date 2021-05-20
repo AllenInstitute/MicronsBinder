@@ -1,5 +1,20 @@
 # Utils
 import numpy as np
+import pickle
+
+
+def save_dict(fname, data_dict):
+
+  with open(fname, 'wb') as handle:
+    pickle.dump(data_dict, handle, protocol=4)
+
+
+def load_dict(fname):
+
+  with open(fname, 'rb') as handle:
+    data = pickle.load(handle)
+
+  return data
 
 
 def distance(x, y):

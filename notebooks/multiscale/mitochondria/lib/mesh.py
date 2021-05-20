@@ -5,18 +5,21 @@ from collections import Counter
 import numpy as np
 from scipy import sparse as sp
 from scipy.sparse import csgraph
+from scipy.spatial import cKDTree
 from meshparty import trimesh_io
 import networkx as nx
 import h5py
 
+from . import ngl
+
 
 MESHMETA = trimesh_io.MeshMeta()
-MITOMESHDIR = ""
-CELLMESHDIR = "data/neuronmeshes"
+MITOMESHDIR = "data/mitomeshes"
+CELLMESHDIR = "../data/neuron_meshes_v185"
 
 
 def download_meshes(segids, overwrite=False, parallel=1,
-                    meshdir=MITOMESHDIR, cvpath=None, **kwargs):
+                    meshdir=MITOMESHDIR, cvpath=ngl.MITO_CVPATH, **kwargs):
     trimesh_io.download_meshes(
         segids, meshdir, cvpath,
         overwrite=overwrite, n_threads=parallel, **kwargs)
@@ -34,10 +37,6 @@ def read_cell_mesh(segid):
 
 def read_neuron_mesh(segid):
     return read_cell_mesh(segid)
-
-
-def read_mesh_id(segid, meshdir=MITOMESHDIR):
-    return read_mesh(f"{meshdir}/{segid}.h5")
 
 
 def read_mesh(filename, scale=True):
@@ -69,6 +68,44 @@ def write_cv_mesh(mesh, filename):
         f.create_dataset("link_edges", data=link_edges)
 
 
+def maskmesh(mesh, mask):
+    """Applies a mask to a mesh
+
+    Returns a mesh where the remaining vertices survived the mask.
+    Only keeps the faces that connect vertices that survive the mask.
+    """
+    newvertices = mesh.vertices[mask]
+
+    # mapping mask indices to their matching values in the masked result
+    indexmap = np.empty((len(mesh.vertices),), dtype=np.uint32)
+    indexmap[mask] = np.arange(len(newvertices))
+
+    # masking faces and mapping their index values
+    facemask = mask[mesh.faces].min(axis=1)
+    newfaces = indexmap[mesh.faces[facemask]]
+
+    return trimesh_io.Mesh(newvertices, newfaces)
+
+
+def node_associations(mesh, nodes):
+    """
+    Determines the node associated to each mesh vertex following
+    the graph of mesh faces
+    """
+    kdt = cKDTree(mesh.vertices)
+    nearest = kdt.query(nodes)[1]
+
+    _, _, sources = csgraph.dijkstra(
+                        mesh.csgraph, directed=False,
+                        indices=nearest, min_only=True,
+                        return_predecessors=True)
+
+    nearestmapping = {v: i for (i, v) in enumerate(nearest)}
+    nearestmapping[-9999] = -9999
+    
+    return np.array([nearestmapping[i] for i in sources])
+
+    
 def mesh_length(graph):
     first_node = next(iter(graph.nodes))
     initial_dists = nx.single_source_dijkstra_path_length(graph, first_node)
@@ -96,6 +133,8 @@ def find_mesh_boundary_vertices(mesh):
 
 def find_mesh_boundary_components(mesh):
     boundary_edges = find_mesh_boundary_edges(mesh)
+    if len(boundary_edges) == 0:
+        return []
 
     return edge_components(boundary_edges)
 
@@ -223,7 +262,7 @@ def attach_new_pt(mesh, new_pt, boundary=None):
 
     new_faces = np.array(assemble_consistent_faces(boundary_edges, new_i))
     new_faces = flip_if_mostly_inwards(new_faces, new_verts, new_pt)
-    all_new_faces = np.hstack((mesh.faces, new_faces.ravel()))
+    all_new_faces = np.vstack((mesh.faces, new_faces))
 
     return trimesh_io.Mesh(vertices=new_verts, faces=all_new_faces)
 
