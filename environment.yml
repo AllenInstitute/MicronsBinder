@@ -23,13 +23,14 @@ dependencies:
   - statsmodels
   - datajoint
   - pip:
-    - nglui
-    - cloud-volume
-    - annotationframeworkclient
-    - imageryclient
-    - meshparty
-    - dashdataframe==0.4.1
-    - gdown
-    - networkx
-    - tqdm
-    - neuroglancer
+      - nglui
+      - cloud-volume
+      - annotationframeworkclient
+      - imageryclient
+      - meshparty
+      - dashdataframe==0.4.1
+      - gdown
+      - networkx
+      - tqdm
+      - neuroglancer
+      - caveclient
