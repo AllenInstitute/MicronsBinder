@@ -24,7 +24,7 @@ dependencies:
   - datajoint
   - pip:
       - nglui
-      - cloud-volume
+      - cloud-volume>=5.0.0
       - annotationframeworkclient
       - imageryclient
       - meshparty
