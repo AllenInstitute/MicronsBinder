@@ -27,7 +27,6 @@ dependencies:
       - cloud-volume>=5.0.0
       - annotationframeworkclient
       - imageryclient
-      - itkwidgets
       - meshparty
       - dashdataframe==0.4.1
       - gdown
