@@ -1,6 +1,7 @@
 # Structure-function analysis
 
 ## Outline
+![functional analysis flowchart](figures/function_flowchart.png)
 ### scripts
 - `compute_neurite_length.py`: Compute axon/dendrite length using skeletons.
 - `compute_degree.py`: Compute out/in-degree from the connectivity graph. (This may take several minutes to run.)
