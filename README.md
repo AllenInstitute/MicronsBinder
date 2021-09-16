@@ -1,12 +1,26 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/seung-lab/MicronsBinder/master?urlpath=lab) [![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/download/releases/3.7.0/)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/AllenInstitute/MicronsBinder/master?urlpath=lab) [![](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/download/releases/3.7.0/)
 
 # MicronsBinder
 A collection of notebooks to provide examples of using data from [microns-explorer.org](https://microns-explorer.org).  The repository is designed to work with [mybinder.org](https://mybinder.org)
 
 
 # Contents
+### Phase 3 cubic mm Introductory Notebooks
+In July 2021, we released the data from [Phase 3 of the project](https://) that includes functional and anatomical data from large scale EM reconstructions covering approximately a mm^3 .  We have created some [introductory notebooks](notebooks/mm3_intro) to help users begin to analyze the anatomical data. There is a companion set of repositories for how to access the functional data located here ()
 
-### Introductory Notebooks
+* [CAVESetup](notebooks/mm3_intro/CAVEsetup.ipynb)
+This notebook walks users through how to setup their environment to connect to the Connectome Annotation Versioning Engine services that are needed to access the data.  When using mybinder you will need to follow this notebook each time you launch the docker image.  When setting up your own machine it will only need to be followed once.  All other notebooks assume you have setup an account and credentials before continuing. 
+
+* [SynapseAndAnnotationQuery](notebooks/mm3_intro/SynapseAndAnnotationQuery.ipynb)
+This notebook shows how to query the inputs and outputs of a neuron, and then goes on to show you how to query any of the data annotation tables, including automated detection of where the neurons are, what neurons have been proofread, and so on. 
+
+* [MeshAccess](notebooks/mm3_intro/MeshAccess.ipynb)
+Demonstrates how to download meshes of neurons from the flat and dynamic segmentation using cloud-volume and MeshParty, explaining their differences.  Note the visualization components of this require 
+
+
+### Phase 1 Introductory Notebooks
+An earlier releases of the [Phase 1 data  from layer 2/3](https://microns-explorer.org/phase1) used alternative data formats, and so we have alternative notebooks for accessing this data. 
+
 We've created some [introductory notebooks](notebooks/intro) to demonstrate some potential uses of the data. See:
 
 * [MostSynapsesInAndOut](notebooks/intro/MostSynapsesInAndOut.ipynb)  
@@ -24,7 +38,7 @@ This demonstrates basic 3D visualization of meshes and skeletons using vtk, as w
 This demonstrates two techinques to create 3D scale bars on 3D visualization plots. It requires access to an X windows system to view these plots.
 
 ### Multiscale manuscript analyses  
-These notebooks walk through some newer analyses studying the Phase I electron microscopy volume.  
+These notebooks walk through some newer analyses studying the [Phase 1 data  from layer 2/3](https://microns-explorer.org/phase1).  
 
 These include:
 * [Motif analysis](notebooks/multiscale/motifs) of a proofread synaptic connectivity graph between pyramidal cells.
