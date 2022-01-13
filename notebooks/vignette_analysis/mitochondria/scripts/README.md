@@ -12,13 +12,14 @@ soma.
 This script computes a data frame with an ID, volume, and surface area
 measurement for each branch. The branch ID is the minimum skeleton node index
 that is contained within the branch. This can be parallelized by splitting over
-the processed (`clean_and_complete_soma_ids_v185.csv` below).
+the processed (`pni_analysis_ids.csv` below).
 
-NOTE: this requires downloading the meshes (through downloadNeuronMeshes.sh)
+NOTE: this requires downloading the meshes (through downloadNeuronMeshes.sh, though these are not available yet)
 ```
 $ python scripts/computebasicbranchstats.py \
-      data/clean_and_complete_soma_ids_v185.csv \
-      data/basicbranchstats.csv
+      data/pyc_analysis_ids.csv \
+      data/distancebinstats.csv \
+      --branchtype distancebins
 ```
 
 
@@ -30,14 +31,16 @@ This can be parallelized by splitting the mitochondria dataframe
 (`pni_mito_cellswskel_v185.csv`) by cell or naively splititng the rows.
 
 
-NOTE: this requires downloading the mitochondria meshes but these are not available yet
+NOTE: this requires downloading the mitochondria meshes, though these are not available yet
 ```
 $ python scripts/mitotoskel.py \
       data/pni_mito_cellswskel_v185.csv \
+      data/pni_analysis_ids.csv \
       data/temp/assoc_
 $ python scripts/assemblemitotoskel.py \
       data/pni_mito_cellswskel_v185.csv \
-      data/pycids_v185.csv data/mito_to_skel_v185.h5
+      data/pni_analysis_ids.csv \
+      data/mitotoskel.h5
 ```
 
 
@@ -51,8 +54,8 @@ NOTE: this requires downloading the mitochondria meshes (through downloadmitomes
 ```
 $ python scripts/computeextramitostats.py \
       data/pni_mito_cellswskel_v185.csv \
-      data/mitotoskel.h5 \
-      data/pni_mito_cellswskel_v185_fullstats.csv
+      data/mitotoskel_v185.h5 \
+      data/pni_mito_analysisids_fullstats.csv
 ```
 
 
@@ -63,16 +66,44 @@ compute synapse and mitochondrial density metrics, and write out
 two dataframes as a result - one describing a branch per row, and
 another describing a cell per row, where each branch of a compartment
 is summed within each cell. This can be parallelized by splitting over
-cells (`clean_and_complete_soma_ids_v185.csv` below).
+cells (`pni_analysis_ids.csv` below).
 ```
 $ python scripts/computedensitystats.py \
-      data/pni_mito_cellswskel_v185_fullstats.csv \
-      data/clean_and_complete_soma_ids_v185.csv \
-      data/neuron_received_synapses_v185.csv \
-      data/basicbranchstats.csv \
+      data/pni_mito_analysisids_v185_fullstats.csv \
+      data/pni_analysis_ids.csv data/neuron_received_synapses_v185.csv \
+      data/distancebinstats.csv \
       data/pni_mito_cell_overlaps_v185.csv \
       data/pni_nucleus_segments.csv \
-      data/clean_and_complete_nucleus_lookup.csv \
-      data/fullbranchstats.csv \
-      data/cellwisestats.csv
+      data/pni_nucleus_cell_overlaps_v185.csv \
+      data/distancebinfullstats.csv \
+      data/notused.csv \
+      --branchtype distancebins
+```
+
+## Computing branch segment diameter
+```
+$ python scripts/branchdiameter.py \
+      data/pni_analysis_ids.csv \
+      data/mitotoskel_v185.h5 \
+      data/distancebindiameters.csv \
+      --branchtype distancebins
+```
+
+
+## Computing branch segment proximity to soma
+```
+$ python scripts/branchproximity.py \
+      data/pni_analysis_ids.csv \
+      data/distancebinproximity.csv \
+      --branchtype distancebins
+```
+
+
+## Computing mitochondrion length
+```
+$ python computemitolengths.py \
+      data/pni_mito_analysisids_v185_extrastats.csv \
+      data/pni_analysis_ids.csv \
+      data/mitotoskel_v185.h5 \
+      data/pni_mito_analysisids_v185_fullstats.csv
 ```
