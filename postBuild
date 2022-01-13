@@ -24,7 +24,7 @@ datadir="notebooks/vignette_analysis/data"
 mkdir -p ${datadir}
 cd ${datadir} \
 && wget -q https://zenodo.org/record/5579388/files/211019_smoothed_skeletons.tgz \
-&& tar -xzf smoothed_skeletons_v185.tgz
+&& tar -xzf 221019_smoothed_skeletons_v185.tgz
 cd $home
 
 # vignette_analysis/function
@@ -40,7 +40,7 @@ cd $home
 mitodir="notebooks/vignette_analysis/mitochondria/data"
 mkdir -p ${mitodir}
 cd ${mitodir} \
-&& gdown --id 1MruDsi7q77G5Mq0b1t95TDFwVoHDK3WB -O mito_intermediate_data_v185.tgz \
+&& gdown --id 1MruDsi7q77G5Mq0b1t95TDFwVoHDK3WB -O vignette_mito_analysis_data.tgz \
 && tar -xzf mito_intermediate_data_v185.tgz
 cd $home
 
@@ -48,6 +48,7 @@ cd $home
 motifdir="notebooks/vignette_analysis/motifs/"
 cd ${motifdir} \
 && wget -q https://zenodo.org/record/5579388/files/211019_vignette_motif_analysis_data.tgz \
+&& tar -xzf 221019_vignette_motif_analysis_data.tgz \
 && tar -xzf multiscale_motif_base_data.tgz \
 && tar -xzf multiscale_motif_intermediate_data.tgz
 cd $home
@@ -56,6 +57,6 @@ cd $home
 resourcedir="notebooks/vignette_analysis/resource_statistics/data"
 mkdir -p ${resourcedir}
 cd ${resourcedir} \
-&& wget -q https://zenodo.org/record/5579388/files/211019_vignette_resourcestats_analysis_data.tgz \
-&& tar -xzf 211019_vignette_resourcestats_analysis_data.tgz
+&& gdown --id 1JzpHNK0wzj7JfmdM4fECR4yPZT6BE9ZB -O vignette_resourcestats_analysis_data.tgz \
+&& tar -xzf vignette_resourcestats_analysis_data.tgz
 cd $home
