@@ -1,7 +1,178 @@
 import numpy as np
+from collections import namedtuple
 from scipy import stats
 from scipy import optimize
 import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from sklearn.decomposition import FastICA
+
+
+GroupStats = namedtuple("GroupStats",
+                        ["xs", "centers", "ns", "lowerbnds", "upperbnds"])
+
+
+def computestatspergroup(df, varname, groupname, statstype):
+    xs = np.unique(df[groupname])
+
+    cs, ns, lbs, ubs = [], [], [], []
+    for x in xs:
+        subdf = df[df[groupname] == x]
+        n = len(subdf)
+        c, lb, ub = computestat(subdf, varname, statstype)
+
+        cs.append(c)
+        ns.append(n)
+
+        if lb is not None:
+            lbs.append(lb)
+        if ub is not None:
+            ubs.append(ub)
+
+    cs = np.array(cs)
+    ns = np.array(ns)
+    lbs = np.array(lbs)
+    ubs = np.array(ubs)
+
+    assert len(lbs) == 0 or len(lbs) == len(cs)
+    assert len(ubs) == 0 or len(ubs) == len(cs)
+    assert len(lbs) == len(ubs)
+
+    if len(lbs) == 0:
+        return GroupStats(xs, cs, ns, None, None)
+    else:
+        return GroupStats(xs, cs, ns, lbs, ubs)
+
+
+def computestat(subdf, varname, statstype):
+    if statstype == "meanstddev":
+        return meanstddev(subdf, varname)
+    if statstype == "mean":
+        return meanstddev(subdf, varname)
+    if statstype == "median":
+        return meanstddev(subdf, varname)
+    elif statstype == "meanstderr":
+        return meanstderr(subdf, varname)
+    elif statstype == "IQR":
+        return iqr(subdf, varname)
+    elif statstype == "meanIQR":
+        center = np.mean(subdf[varname])
+        _, lb, ub = iqr(subdf, varname)
+        return center, lb, ub
+    elif statstype == "COV":
+        return cov(subdf, varname)
+    if statstype == "mean":
+        return np.mean(subdf[varname]), None, None
+    if statstype == "median":
+        return np.percentile(subdf[varname], 50), None, None
+    else:
+        raise ValueError(f"unknown statstype: {statstype}")
+
+
+def meanstddev(subdf, varname):
+    center = np.mean(subdf[varname])
+    stddev = np.std(subdf[varname])
+    lowerbnd = center - stddev
+    upperbnd = center + stddev
+
+    return center, lowerbnd, upperbnd
+
+
+def meanstderr(subdf, varname):
+    center = np.mean(subdf[varname])
+    with np.errstate(all="ignore"):
+        stderr = stats.sem(subdf[varname])
+    lowerbnd = center - stderr
+    upperbnd = center + stderr
+
+    return center, lowerbnd, upperbnd
+
+
+def iqr(subdf, varname):
+    return np.percentile(subdf[varname], [50, 25, 75])
+
+
+def cov(subdf, varname):
+    mean = np.mean(subdf[varname])
+    stddev = np.std(subdf[varname])
+
+    return stddev/mean, None, None
+
+
+def regression(df, colnames, ycolname, groupcolname=None, return_model=False):
+    if groupcolname is None:
+        model = smf.ols(f"{ycolname} ~ {' + '.join(colnames)}", df)
+    else:
+        model = smf.mixedlm(f"{ycolname} ~ {' + '.join(colnames)}",
+                            df, groups=df[groupcolname])
+
+    if return_model:
+        return model.fit(), model
+    else:
+        return model.fit()
+
+
+def residualregression(df, colnames1, colnames2, ycolname, groupcolname=None):
+    initlm = regression(df, colnames1, ycolname, groupcolname=groupcolname)
+
+    tempdf = df.copy()
+    tempdf["resid"] = initlm.resid
+
+    return regression(tempdf, colnames2, "resid"), tempdf
+
+
+def ICAregression(df, colnames, ycolname, groupcolname=None, seed=None):
+    df = df.copy()
+    Xraw = df[colnames].values
+
+    # standardizing
+    X = (Xraw - Xraw.mean(0)) / Xraw.std(0)
+
+    if seed is not None:
+        ica = FastICA(n_components=len(colnames), random_state=seed).fit(X)
+    else:
+        ica = FastICA(n_components=len(colnames)).fit(X)
+    T = ica.transform(X)
+
+    Cnames = list()
+    for i in range(len(colnames)):
+        Cnames.append(f"C{i}")
+        df[Cnames[-1]] = T[:, i]
+
+    if groupcolname is None:
+        lm = smf.ols(f"{ycolname} ~ {' + '.join(Cnames)}", df).fit()
+    else:
+        lm = smf.mixedlm(f"{ycolname} ~ {' + '.join(Cnames)}",
+                         df, groups=df[groupcolname]).fit()
+
+    return lm, ica, T
+
+
+SVD = namedtuple("SVD", ["U", "s", "Vt"])
+
+
+def PCAregression(df, colnames, ycolname, groupcolname=None):
+    df = df.copy()
+    Xraw = df[colnames].values
+
+    # standardizing
+    X = (Xraw - Xraw.mean(0)) / Xraw.std(0)
+
+    U, s, Vt = np.linalg.svd(X.T, full_matrices=False)
+
+    Cnames = list()
+    for (i, v) in enumerate(Vt):
+        Cnames.append(f"C{i}")
+        df[Cnames[-1]] = v.ravel()
+
+    if groupcolname is None:
+        lm = smf.ols(f"{ycolname} ~ {' + '.join(Cnames)}", df).fit()
+    else:
+        lm = smf.mixedlm(f"{ycolname} ~ {' + '.join(Cnames)}",
+                         df, groups=df[groupcolname]).fit()
+
+    svd = SVD(U, s, Vt)
+
+    return lm, svd
 
 
 def fit_linear_model(X, y, sort=True):

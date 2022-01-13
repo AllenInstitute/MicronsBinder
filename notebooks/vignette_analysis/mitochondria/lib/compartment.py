@@ -15,7 +15,7 @@ ENGLISHLABELS = {
     0: "Somatic", 1: "Axonal", 2: "Basal",
     3: "Apical", 4: "Unknown", 5: "Unknown dendritic"
 }
-MITOTOSKEL_FILENAME = "intermeds/210329_dist_data_pyr_refine.h5"
+MITOTOSKEL_FILENAME = "data/mitotoskel_v185.h5"
 
 
 def toskelfields(filename=MITOTOSKEL_FILENAME):
@@ -43,7 +43,7 @@ def refine_labels(segskel, complbls, n_edges=1):
     assert n_edges >= 0, "need a nonnegative edge threshold"
 
     # Find all nodes within n_edges of the root
-    soma_edge_dist = skel.path_length(segskel, segskel.root, binary=True)
+    soma_edge_dist = skel.path_length_to_root(segskel, segskel.root, binary=True)
     soma_nodes = np.nonzero(soma_edge_dist <= n_edges)[0]
 
     newlbls = np.zeros((len(complbls),), dtype=np.uint8)
@@ -55,10 +55,41 @@ def refine_labels(segskel, complbls, n_edges=1):
     return newlbls
 
 
-def majority_vote_label(distdf):
-    u_mitoids = np.unique(distdf.mitoid)
+def majority_vote_label_old(mitotoskel, colname="nodelbls"):
+    u_mitoids = np.unique(mitotoskel.mitoids)
 
-    c = Counter(zip(distdf.mitoid, distdf.nodelbl))
+    countdf = mitotoskel.groupby(["mitoids", colname])["nodedists"].count()\
+                  .reset_index()
+    c = Counter()
+    for (mitoid, nodelbl, count) in zip(countdf.mitoids,
+                                        countdf[colname],
+                                        countdf["nodedists"]):
+        c[(mitoid, nodelbl)] = count
+
+    lbls = np.empty((len(u_mitoids),), dtype=np.uint8)
+    for (i, v) in enumerate(u_mitoids):
+        maxval = 0
+        maxlbl = -1
+        for j in range(6):
+            if c[(v, j)] > maxval:
+                maxval = c[(v, j)]
+                maxlbl = j
+
+        lbls[i] = maxlbl
+
+    return u_mitoids, lbls
+
+
+def majority_vote_label(mitotoskel, colname="nodelbl"):
+    u_mitoids = np.unique(mitotoskel.mitoid)
+
+    countdf = mitotoskel.groupby(["mitoid", colname])["count"]\
+                  .agg(sum).reset_index()
+    c = Counter()
+    for (mitoid, nodelbl, count) in zip(countdf.mitoid,
+                                        countdf[colname],
+                                        countdf["count"]):
+        c[(mitoid, nodelbl)] = count
 
     lbls = np.empty((len(u_mitoids),), dtype=np.uint8)
     for (i, v) in enumerate(u_mitoids):

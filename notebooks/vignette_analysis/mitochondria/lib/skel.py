@@ -39,8 +39,8 @@ def read_neuron_complbls(segid):
 
 
 def read_skel_and_labels(segid, refine=False):
-    segskel = skel.read_neuron_skel(segid)
-    complbl = skel.read_neuron_complbls(segid)
+    segskel = read_neuron_skel(segid)
+    complbl = read_neuron_complbls(segid)
 
     if refine:
         complbl = compartment.refine_labels(segskel, complbl)
@@ -49,7 +49,7 @@ def read_skel_and_labels(segid, refine=False):
 
 
 def read_skel_assoc(segid, include_counts=False):
-    filename = f"{SKEL_ASSOC_DIR}/assoc__{segid}.h5"
+    filename = f"{SKEL_ASSOC_DIR}/assoc_{segid}.h5"
     with h5py.File(filename, "r") as f:
         data = f[f"{segid}/data"][()]
         mitoids = f[f"{segid}/mitoids"][()]
@@ -66,14 +66,14 @@ def read_skel_assoc(segid, include_counts=False):
     return assocs
 
 
-def path_length(segskel, r, binary=False):
+def path_length_to_root(segskel, r, binary=False):
     graph = segskel.csgraph_binary if binary else segskel.csgraph
 
     return csgraph.dijkstra(graph, directed=False, indices=r)
 
 
 def path_length_to_leaves(segskel, binary=False, return_inds=False):
-    pls = path_length(segskel, segskel.end_points, binary=binary)
+    pls = path_length_to_root(segskel, segskel.end_points, binary=binary)
 
     if return_inds:
         return np.min(pls, axis=0), segskel.end_points[np.argmin(pls, axis=0)]
@@ -130,8 +130,74 @@ def branches(skel, compartmentlabels, somadists=None):
     return branchids, branchlbl
 
 
-def graph_components(graph, subgraph_inds=None):
+def distalbranches(skel, compartmentlabels, somadists, distthresh=60_000):
+    templabels = np.copy(compartmentlabels)
+    templabels[np.logical_and(somadists < distthresh,
+                              compartmentlabels != 0)] = -1
+    templabels[np.isinf(somadists)] = -2
+
+    return branches(skel, templabels, somadists)
+
+
+def branchsegments(skel, compartmentlabels, somadists=None):
+    templabels = np.zeros((len(skel.vertices),), dtype=np.int)
+    paths = full_cover_paths(skel)
+    bps = skel.branch_points
+
+    for path in paths:
+        bps_crossed = np.cumsum(np.isin(path, bps))
+        templabels[path] = np.maximum(templabels[path], bps_crossed)
+
+    # Making the soma a separate component
+    templabels[compartmentlabels == 0] = -1
+
+    return branches(skel, templabels, somadists)
+
+
+def distancebins(skel, compartmentlabels, somadists, resolution=10_000):
+    templabels = (somadists // resolution).astype(int)
+    templabels[compartmentlabels == 0] = -1
+
+    branchids, templbl = branches(skel, templabels, somadists)
+    branchlbl = {i: compartmentlabels[i] for i in np.unique(branchids)}
+
+    return branchids, branchlbl
+
+
+def coveredornot(skel, compartmentlabels, somadists, coverednodes):
+    nodecovered = np.isin(np.arange(len(skel.vertices)), coverednodes)
+
+    # use the negative soma distances to label the node furthest from
+    # the soma instead of the closest
+    branchids_, branchlbl_ = branches(skel, nodecovered, -somadists)
+
+    # Adding 6 to the label for uncovered components
+    branchlbl = {k: compartmentlabels[k] + 6*(1-branchlbl_[k])
+                 for k in branchlbl_.keys()}
+
+    return branchids_, branchlbl
+
+
+def graphcomponents(graph, subgraph_inds=None):
     if subgraph_inds is not None:
         graph = graph[subgraph_inds, :][:, subgraph_inds]
 
     return csgraph.connected_components(graph, directed=False)    
+
+
+def pathlength(cellskel, grouplbl=None, groupid=None, scale=1000.):
+    """Computes the path length of the edges within a group (often a branch)"""
+    if grouplbl is None or groupid is None:
+        groupedges = np.arange(len(cellskel.edges))
+
+    else:
+        vertinds = np.flatnonzero(grouplbl == groupid)
+
+        groupedges = np.flatnonzero(np.isin(cellskel.edges, vertinds).min(1))
+
+    distances = np.linalg.norm(
+                    cellskel.vertices[cellskel.edges[groupedges, 1]]
+                    - cellskel.vertices[cellskel.edges[groupedges, 0]],
+                    axis=1)
+
+    return sum(distances) / scale
