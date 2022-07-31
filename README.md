@@ -41,12 +41,12 @@ This demonstrates two techinques to create 3D scale bars on 3D visualization plo
 These notebooks walk through some newer analyses studying the [Phase 1 data  from layer 2/3](https://microns-explorer.org/phase1).  
 
 These include:
-* [Motif analysis](notebooks/multiscale/motifs) of a proofread synaptic connectivity graph between pyramidal cells.
-* [Functional analysis](notebooks/multiscale/function) of a subset of the same pyramidal cells based on two-photon calcium imaging. The analysis relates local connectivity to function.
-* [Mitochondria analysis](notebooks/multiscale/mitochondria) comparing mitochondria across neuronal compartments (axon, dendrite, soma), as well as a relation between mitochondrial density and synapse density.
-* [Resource statistics](notebooks/multiscale/resource_statistics) that summarize neurite branch length and the expected completeness of the dendritic arbors in the volume.
+* [Motif analysis](notebooks/vignette_analysis/motifs) of a proofread synaptic connectivity graph between pyramidal cells.
+* [Functional analysis](notebooks/vignette_analysis/function) of a subset of the same pyramidal cells based on two-photon calcium imaging. The analysis relates local connectivity to function.
+* [Mitochondria analysis](notebooks/vignette_analysis/mitochondria) comparing mitochondria across neuronal compartments (axon, dendrite, soma), as well as a relation between mitochondrial density and synapse density.
+* [Resource statistics](notebooks/vignette_analysis/resource_statistics) that summarize neurite branch length and the expected completeness of the dendritic arbors in the volume.
 
-See each [directory](notebooks/multiscale) and our [biorxiv manuscript](https://www.biorxiv.org/content/10.1101/2020.10.14.338681v3) for more details.
+See each [directory](notebooks/vignette_analysis) and our [biorxiv manuscript](https://www.biorxiv.org/content/10.1101/2020.10.14.338681v3) for more details.
 
 
 # <a name="localenv"></a> Local environment
