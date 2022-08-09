@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.colors import Normalize 
 from scipy.interpolate import interpn
-import mpl_scatter_density
 import seaborn as sns
 from scipy import stats
 
