@@ -37,7 +37,7 @@ This demonstrates basic 3D visualization of meshes and skeletons using vtk, as w
 * [Render3DScaleBar](notebooks/intro/Render3DScaleBar.ipynb)
 This demonstrates two techinques to create 3D scale bars on 3D visualization plots. It requires access to an X windows system to view these plots.
 
-### Multiscale manuscript analyses  
+### Vignette manuscript analyses
 These notebooks walk through some newer analyses studying the [Phase 1 data  from layer 2/3](https://microns-explorer.org/phase1).  
 
 These include:
@@ -76,8 +76,7 @@ make vignette_analysis/motifs
 You can also install all data using `make all` and remove all data using `make clean`. See the `Makefile` for more options.
 
 # Related projects
-The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed
-by Jeremy Maitin-Shepard from the Connectomics group at Google).
+The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed by Jeremy Maitin-Shepard from the Connectomics group at Google).
 
 * [neuroglancer](https://www.github.com/google/neuroglancer)  
 This is the main neuroglancer repository developed by Jeremy Maitin-Shepard. 
