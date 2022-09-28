@@ -37,7 +37,7 @@ This demonstrates basic 3D visualization of meshes and skeletons using vtk, as w
 * [Render3DScaleBar](notebooks/intro/Render3DScaleBar.ipynb)
 This demonstrates two techinques to create 3D scale bars on 3D visualization plots. It requires access to an X windows system to view these plots.
 
-### Multiscale manuscript analyses  
+### Vignette manuscript analyses
 These notebooks walk through some newer analyses studying the [Phase 1 data  from layer 2/3](https://microns-explorer.org/phase1).  
 
 These include:
@@ -50,12 +50,14 @@ See each [directory](notebooks/vignette_analysis) and our [biorxiv manuscript](h
 
 
 # <a name="localenv"></a> Local environment
-A local environment for running the intermediate code generation scripts can be installed using the Anaconda environment installed within the binder and the `postBuild` script
+### Python packages
+A local environment for running the intermediate code generation scripts can be installed using the Anaconda environment installed within the binder and the `postBuild` script. We highly recommend using [mamba](https://mamba.readthedocs.io/en/latest/index.html) to at least resolve the initial set of dependencies.
 ```
-conda env create -f environment.yml
-bash postBuild
+conda install mamba -n base -c conda-forge
+mamba env create -f environment.yml
+conda activate micronsbinder
 ```
-This installs the required python packages for running the basic code and the jupyter extensions for any plots and visualizations.
+This installs the required python packages for running the contained code.
 
 If you'd like to use these notebooks as part of your general jupyter environment. You'll likely need to install this environment into your ipython kernels.
 ```
@@ -64,10 +66,17 @@ python -m ipykernel install --user --name=micronsbinder
 ```
 You can then select this python environment when opening the relevant notebooks.
 
+### Analysis data
+
+If you'd like to download the data or jupyter plugins for a specific analysis, you can use the `Makefile` targets to download the data for a specific notebook directory. For example, the command for the [motif analysis](notebooks/vignette_analysis/motifs) is:
+```bash
+make vignette_analysis/motifs
+```
+
+You can also install all data using `make all` and remove all data using `make clean`. See the `Makefile` for more options.
 
 # Related projects
-The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed
-by Jeremy Maitin-Shepard from the Connectomics group at Google).
+The notebooks contained here make heavy use of standard python tools, but also tools built as part of the collaboration between the Connectomics group at Allen Institute, the Seung Lab at Princeton, and the Tolias lab at Baylor, along with neuroglancer (developed by Jeremy Maitin-Shepard from the Connectomics group at Google).
 
 * [neuroglancer](https://www.github.com/google/neuroglancer)  
 This is the main neuroglancer repository developed by Jeremy Maitin-Shepard. 

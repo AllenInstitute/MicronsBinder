@@ -24,6 +24,8 @@ Analysis flowchart: solid boxes indicate data, dashed boxes indicate manuscript 
   A dataframe that describes how much overlap each mitochondrion has with each cell.
 * `pni_nucleus_segments.csv`
   A dataframe that describes each predicted nucleus segment in the volume.
+* `pni_nucleus_cell_overlaps_v185.csv`
+  A dataframe that maps each cell to an overlapping nucleus.
 * `neuron_received_synapses_v185.csv`
   A dataframe that describes the synapses received by each analyzed neuron (filtered from [the full synapse dataframe](https://zenodo.org/record/5579388/files/pni_synapses_v185.csv))
 * `pyc_analysis_ids.csv`
