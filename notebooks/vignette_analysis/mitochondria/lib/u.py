@@ -1,6 +1,7 @@
 import re
 
 import numpy as np
+import pandas as pd
 from scipy.spatial import KDTree  # aliasing this
 import matplotlib.pyplot as plt
 
@@ -14,6 +15,15 @@ def extract_centroids(df):
     return np.array(list(zip(df.ctr_pos_x_nm,
                              df.ctr_pos_y_nm,
                              df.ctr_pos_z_nm)))
+
+
+def joinbybranchid(basedf, *otherdfs):
+    for otherdf in otherdfs:
+        basedf = pd.merge(basedf, otherdf,
+                          left_on=["cellid", "branchid"],
+                          right_on=["cellid", "branchid"])
+
+    return basedf
 
 
 def extract_centroids_dl(df, colname="ctr_pt_position"):

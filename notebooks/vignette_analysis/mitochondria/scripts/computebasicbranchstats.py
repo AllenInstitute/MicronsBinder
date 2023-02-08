@@ -21,11 +21,14 @@ sys.path.append(".")
 from lib import compartment, skel, mesh, u
 
 
-def main(outputfilename, idfilename):
+def main(outputfilename, idfilename,
+         mitotoskelfilename=None, branchtype="full"):
 
     ids = u.readids(idfilename)
+    mitotoskel = (compartment.readmitotoskel(mitotoskelfilename)
+                  if mitotoskelfilename is not None else None)
 
-    branchdf, errors = branchstats(ids)
+    branchdf, errors = branchstats(ids, branchtype, mitotoskel)
 
     branchdf.to_csv(outputfilename)
 
@@ -35,7 +38,7 @@ def main(outputfilename, idfilename):
         writeerrors(errors, errfilename)
 
 
-def branchstats(cellids):
+def branchstats(cellids, branchtype="full", mitotoskel=None):
     """
     Computes the basic branch stats (volume, surface area) for a
     set of cell ids. Returns a pandas DataFrame, and a list of
@@ -48,10 +51,13 @@ def branchstats(cellids):
         try:
             cellskel, complbl = skel.read_skel_and_labels(cellid, refine=False)
             cellmesh = mesh.read_cell_mesh(cellid)
+            cellmitotoskel = (mitotoskel[mitotoskel.cellid == cellid]
+                              if mitotoskel is not None else None)
 
             # Label the skeleton by branch, and propagate those labels
             # to the mesh
-            branchlbl = skelbranches(cellskel, complbl)
+            branchlbl, branchclbl = skelbranches(cellskel, complbl,
+                                                 branchtype, cellmitotoskel)
             meshbranchlbl = meshbranches(cellmesh, cellskel, branchlbl)
 
             branchids = np.unique(branchlbl)
@@ -64,13 +70,15 @@ def branchstats(cellids):
                 branchmesh = mesh.maskmesh(
                     cellmesh, meshbranchlbl == branchid)
 
+                pl = skel.pathlength(cellskel, branchlbl, branchid)
                 vol = meshvolume(branchmesh)
                 surf = meshsurfacearea(branchmesh)
 
                 records.append({
                     "cellid": cellid,
                     "branchid": branchid,
-                    "complbl": complbl[branchid],
+                    "complbl": branchclbl[branchid],
+                    "pathlength": pl,
                     "volume": vol,
                     "surfacearea": surf
                 })
@@ -86,13 +94,27 @@ def branchstats(cellids):
     return pd.DataFrame.from_records(records), errors
 
 
-def skelbranches(cellskel, complbl):
+def skelbranches(cellskel, complbl, branchtype="full", cellmitotoskel=None):
     """Labels the branches of a skeleton given the compartment labels"""
     somadists = compartment.compute_node_distance_to_soma(
-                    cellskel, complbl, binary=True)
+                    cellskel, complbl, binary=False)
 
-    branchlbl_, _ = skel.branches(cellskel, complbl, somadists)
-    return np.array([branchlbl_[i] for i in range(len(cellskel.vertices))])
+    if branchtype == "full":
+        branchlbl, branchclbl = skel.branches(cellskel, complbl, somadists)
+    elif branchtype == "branchpointsegments":
+        branchlbl, branchclbl = skel.branchsegments(cellskel, complbl, somadists)
+    elif branchtype == "distancebins":
+        branchlbl, branchclbl = skel.distancebins(cellskel, complbl, somadists)
+    elif branchtype == "distalbranches":
+        branchlbl, branchclbl = skel.distalbranches(cellskel, complbl, somadists)
+    elif branchtype == "coveredornot":
+        coverednodes = list(set(cellmitotoskel.nodeid))
+        branchlbl, branchclbl = skel.coveredornot(cellskel, complbl,
+                                                   somadists, coverednodes)
+    else:
+        raise Exception(f"unknown branch type: {branchtype}")
+
+    return branchlbl, branchclbl
 
 
 def meshbranches(cellmesh, cellskel, branchlbl):
@@ -100,7 +122,7 @@ def meshbranches(cellmesh, cellskel, branchlbl):
     meshtoskel = mesh.node_associations(cellmesh, cellskel.vertices)
     matched = meshtoskel != -9999
 
-    meshbranchlbl = np.zeros((len(cellmesh.vertices),), dtype=np.int)
+    meshbranchlbl = np.zeros((len(cellmesh.vertices),), dtype=int)
     meshbranchlbl[matched] = branchlbl[meshtoskel[matched]]
     meshbranchlbl[~matched] = -9999
 
@@ -134,5 +156,7 @@ if __name__ == "__main__":
 
     parser.add_argument("idfilename")
     parser.add_argument("outputfilename")
+    parser.add_argument("--mitotoskelfilename", default=None)
+    parser.add_argument("--branchtype", default="full")
 
     main(**vars(parser.parse_args()))

@@ -1,10 +1,3 @@
-"""
-Computing 'extra' mitochondria stats
-
-This adds a surface area measurement, mitochondrial complexity index,
-and a compartment assignment to each row of the mitochondria stats
-data frame.
-"""
 import sys
 import math
 import argparse
@@ -49,11 +42,11 @@ def labelcompartments(mitodf, mitotoskel, thresh=1_000):
     labellookup = dict(zip(ids, majlbls))
 
     unknownlabel = compartment.ENGLISHLABELS[4]
-    mindist = mitotoskel.groupby("mitoid")["nodelbl", "nodedist"].min()
-    idsnearsoma = set(mindist.index[(mindist.nodedist < thresh) &
-                                    (mindist.nodelbl != 0)].tolist())
-    for i in idsnearsoma:
-        labellookup[i] = unknownlabel
+    #mindist = mitotoskel.groupby("mitoid")["nodelbl", "nodedist"].min()
+    #idsnearsoma = set(mindist.index[(mindist.nodedist < thresh) &
+    #                                (mindist.nodelbl != 0)].tolist())
+    #for i in idsnearsoma:
+    #    labellookup[i] = unknownlabel
 
     return [labellookup.get(i, unknownlabel) for i in mitodf.index]
 

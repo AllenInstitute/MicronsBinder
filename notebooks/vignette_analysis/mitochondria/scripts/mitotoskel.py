@@ -92,6 +92,7 @@ def find_assoc_mitos(segid, mitoids, parallel=1):
 
 def read_skel_kdtree(segid):
     segskel = skel.read_neuron_skel(segid)
+    print(len(segskel.vertices))
 
     return KDTree(segskel.vertices)
 
